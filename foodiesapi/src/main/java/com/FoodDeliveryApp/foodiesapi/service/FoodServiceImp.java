@@ -1,4 +1,5 @@
 package com.FoodDeliveryApp.foodiesapi.service;
+
 import com.FoodDeliveryApp.foodiesapi.entity.FoodEntity;
 import com.FoodDeliveryApp.foodiesapi.io.FoodRequest;
 import com.FoodDeliveryApp.foodiesapi.io.FoodResponse;
@@ -12,8 +13,10 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
+
 import java.io.IOException;
 import java.util.UUID;
+
 @Service
 public class FoodServiceImp implements FoodService {
 
@@ -23,7 +26,8 @@ public class FoodServiceImp implements FoodService {
     @Value("${aws.s3.bucketname}")
     private String bucketName;
 
-    public FoodServiceImp(S3Client s3Client, FoodRepository foodRepository) {
+    public FoodServiceImp(S3Client s3Client,
+                          FoodRepository foodRepository) {
         this.s3Client = s3Client;
         this.foodRepository = foodRepository;
     }
@@ -32,71 +36,88 @@ public class FoodServiceImp implements FoodService {
     public String uploadFile(MultipartFile file) {
 
         if (file == null || file.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File is empty");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "File is empty"
+            );
         }
 
         String originalFileName = file.getOriginalFilename();
 
-        if (originalFileName == null || originalFileName.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid file name");
+        if (originalFileName == null || originalFileName.isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid file name"
+            );
         }
 
         int dotIndex = originalFileName.lastIndexOf(".");
+
         if (dotIndex == -1) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid file type");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid file type"
+            );
         }
 
-        String fileExtension = originalFileName.substring(dotIndex + 1);
-        String key = UUID.randomUUID() + "." + fileExtension;
+        String extension = originalFileName.substring(dotIndex + 1);
+
+        String key = UUID.randomUUID() + "." + extension;
 
         try {
 
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(key)
-                    .contentType(file.getContentType())
-                    .build();
+            PutObjectRequest putObjectRequest =
+                    PutObjectRequest.builder()
+                            .bucket(bucketName)
+                            .key(key)
+                            .contentType(file.getContentType())
+                            .build();
 
-            PutObjectResponse response = s3Client.putObject(
-                    putObjectRequest,
-                    RequestBody.fromBytes(file.getBytes())
-            );
+            PutObjectResponse response =
+                    s3Client.putObject(
+                            putObjectRequest,
+                            RequestBody.fromBytes(file.getBytes())
+                    );
 
-            if (response.sdkHttpResponse().isSuccessful()) {
-
-                return "https://" + bucketName +
-                        ".s3.amazonaws.com/" + key;
-
-            } else {
+            if (!response.sdkHttpResponse().isSuccessful()) {
                 throw new ResponseStatusException(
                         HttpStatus.INTERNAL_SERVER_ERROR,
                         "File upload failed"
                 );
             }
 
+            return "https://" +
+                    bucketName +
+                    ".s3.amazonaws.com/" +
+                    key;
+
         } catch (IOException e) {
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Error occurred while uploading file",
+                    "Error uploading file",
                     e
             );
         }
     }
 
     @Override
-    public FoodResponse addFood(FoodRequest request, MultipartFile file) {
+    public FoodResponse addFood(FoodRequest request,
+                                MultipartFile file) {
 
-        FoodEntity newFoodEntity = convertToEntity(request);
+        FoodEntity foodEntity = convertToEntity(request);
 
         String imageUrl = uploadFile(file);
-        newFoodEntity.setImageUrl(imageUrl);
 
-        newFoodEntity = foodRepository.save(newFoodEntity);
+        foodEntity.setImageUrl(imageUrl);
 
-        return convertToResponse(newFoodEntity);
+        FoodEntity savedFood =
+                foodRepository.save(foodEntity);
+
+        return convertToResponse(savedFood);
     }
 
     private FoodEntity convertToEntity(FoodRequest request) {
+
         return FoodEntity.builder()
                 .name(request.getName())
                 .description(request.getDescription())
@@ -106,13 +127,14 @@ public class FoodServiceImp implements FoodService {
     }
 
     private FoodResponse convertToResponse(FoodEntity entity) {
+
         return FoodResponse.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .category(entity.getCategory())
-                .price(entity.getPrice())   // ✅ FIXED
-                .imageurl(entity.getImageUrl())
+                .price(entity.getPrice())
+                .imageUrl(entity.getImageUrl())
                 .build();
     }
 }
