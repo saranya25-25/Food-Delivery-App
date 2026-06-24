@@ -4,6 +4,8 @@ import com.FoodDeliveryApp.foodiesapi.entity.FoodEntity;
 import com.FoodDeliveryApp.foodiesapi.io.FoodRequest;
 import com.FoodDeliveryApp.foodiesapi.io.FoodResponse;
 import com.FoodDeliveryApp.foodiesapi.repository.FoodRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,16 +13,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
-
+import java.util.List;
+import java.util.stream.Collectors;
 import java.io.IOException;
 import java.util.UUID;
 
 @Service
 public class FoodServiceImp implements FoodService {
-
+@Autowired
     private final S3Client s3Client;
+@Autowired
     private final FoodRepository foodRepository;
 
     @Value("${aws.s3.bucketname}")
