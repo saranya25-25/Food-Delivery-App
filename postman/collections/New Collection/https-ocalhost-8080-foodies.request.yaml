@@ -1,0 +1,5 @@
+$kind: http-request
+name: https://ocalhost:8080:foodies
+url: https://ocalhost:8080:foodies
+method: GET
+order: 4008202115310932
