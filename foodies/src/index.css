@@ -8,3 +8,35 @@ body {
   display: flex;
   flex-direction: column;
 }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+
+body{
+
+  font-family:"Poppins",sans-serif;
+
+  overflow-x:hidden;
+
+}
+
+
+#root{
+
+  width:100%;
+
+}
+
+
+.container{
+
+  max-width:1200px;
+
+  margin:auto;
+
+  padding:0 20px;
+
+}

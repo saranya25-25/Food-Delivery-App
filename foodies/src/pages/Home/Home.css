@@ -1,0 +1,266 @@
+/* ==========================================================
+   FOODIES HOME PAGE
+   RESPONSIVE PREMIUM LAYOUT
+========================================================== */
+
+
+.home-page {
+
+  width:100%;
+
+  overflow:hidden;
+
+  animation:pageFade .6s ease both;
+
+}
+
+
+
+@keyframes pageFade {
+
+
+  from{
+
+    opacity:0;
+
+    transform:translateY(20px);
+
+  }
+
+
+  to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+  }
+
+}
+
+
+
+
+
+
+/* ===============================
+   COMMON WIDTH CONTAINER
+================================ */
+
+
+.home-page > * {
+
+  width:100%;
+
+}
+
+
+
+.container {
+
+  width:100%;
+
+  max-width:1200px;
+
+  margin:auto;
+
+  padding-left:20px;
+
+  padding-right:20px;
+
+}
+
+
+
+
+
+
+
+/* ===============================
+   HERO SECTION
+================================ */
+
+
+.hero-section {
+
+
+  width:100%;
+
+  padding:30px 0;
+
+
+  background:
+
+          linear-gradient(
+
+                  135deg,
+
+                  rgba(255,99,71,.12),
+
+                  rgba(255,255,255,.95)
+
+          );
+
+
+}
+
+
+
+
+
+
+/* ===============================
+   EXPLORE SECTION
+================================ */
+
+
+.home-section {
+
+
+  width:100%;
+
+
+  max-width:1200px;
+
+
+  margin:70px auto 0;
+
+
+  padding:0 20px;
+
+
+  animation:sectionReveal .7s ease both;
+
+
+}
+
+
+
+
+@keyframes sectionReveal {
+
+
+  from{
+
+    opacity:0;
+
+    transform:translateY(30px);
+
+  }
+
+
+  to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+  }
+
+}
+
+
+
+
+
+
+
+/* ===============================
+   FOOD SECTION
+================================ */
+
+
+.food-section {
+
+
+  padding-bottom:80px;
+
+
+}
+
+
+
+
+
+.food-section h2 {
+
+
+  font-size:36px;
+
+  font-weight:800;
+
+
+}
+
+
+
+
+
+
+/* ===============================
+   TABLET
+================================ */
+
+
+@media(max-width:992px){
+
+
+  .home-section {
+
+
+    margin-top:50px;
+
+  }
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ===============================
+   MOBILE
+================================ */
+
+
+@media(max-width:600px){
+
+
+  .container {
+
+
+    padding-left:15px;
+
+    padding-right:15px;
+
+
+  }
+
+
+
+  .home-section {
+
+
+    padding:0 15px;
+
+    margin-top:40px;
+
+  }
+
+
+
+  .food-section h2 {
+
+
+    font-size:28px;
+
+  }
+
+
+
+}

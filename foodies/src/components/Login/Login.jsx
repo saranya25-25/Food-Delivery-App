@@ -1,100 +1,266 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../service/authService";
 import { StoreContext } from "../../context/StoreContext";
 import { toast } from "react-toastify";
+import { assets } from "../../assets/assets";
+
 
 const Login = () => {
+
   const { setToken, loadCartData } = useContext(StoreContext);
+
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    email: "",
-    password: "",
+
+
+  const [data,setData] = useState({
+    email:"",
+    password:""
   });
 
-  const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData((data) => ({ ...data, [name]: value }));
+
+  const [loading,setLoading] = useState(false);
+
+  const [shake,setShake] = useState(false);
+
+
+
+  const onChangeHandler = (e)=>{
+
+    setData(prev=>({
+      ...prev,
+      [e.target.name]:e.target.value
+    }));
+
   };
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
-    try {
+
+
+  const triggerShake = ()=>{
+
+    setShake(true);
+
+    setTimeout(()=>{
+      setShake(false);
+    },500);
+
+  };
+
+
+
+  const onSubmitHandler = async(e)=>{
+
+    e.preventDefault();
+
+    setLoading(true);
+
+
+    try{
+
       const response = await login(data);
-      if (response.status === 200) {
-        setToken(response.data.token);
-        localStorage.setItem("token", response.data.token);
-        await loadCartData(response.data.token);
-        navigate("/");
-      } else {
-        toast.error("Unable to login. Please try again.");
-      }
-    } catch (error) {
-      console.log("Unable to login", error);
-      toast.error("Unable to login. Please try again");
-    }
-  };
-  return (
-    <div className="login-container">
-      <div className="row">
-        <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div className="card border-0 shadow rounded-3 my-5">
-            <div className="card-body p-4 p-sm-5">
-              <h5 className="card-title text-center mb-5 fw-light fs-5">
-                Sign In
-              </h5>
-              <form onSubmit={onSubmitHandler}>
-                <div className="form-floating mb-3">
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="floatingInput"
-                    placeholder="name@example.com"
-                    name="email"
-                    onChange={onChangeHandler}
-                    value={data.email}
-                  />
-                  <label htmlFor="floatingInput">Email address</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="floatingPassword"
-                    placeholder="Password"
-                    name="password"
-                    onChange={onChangeHandler}
-                    value={data.password}
-                  />
-                  <label htmlFor="floatingPassword">Password</label>
-                </div>
 
-                <div className="d-grid">
-                  <button
-                    className="btn btn-outline-primary btn-login text-uppercase"
-                    type="submit"
-                  >
-                    Sign in
-                  </button>
-                  <button
-                    className="btn btn-outline-danger btn-login text-uppercase mt-2"
-                    type="reset"
-                  >
-                    Reset
-                  </button>
-                </div>
-                <div className="mt-4">
-                  Don't have an account? <Link to="/register">Sign up</Link>
-                </div>
-              </form>
-            </div>
+
+      if(response.status===200){
+
+        setToken(response.data.token);
+
+        localStorage.setItem(
+            "token",
+            response.data.token
+        );
+
+
+        await loadCartData(
+            response.data.token
+        );
+
+
+        navigate("/");
+
+      }
+
+
+    }
+    catch(error){
+
+      console.log(error);
+
+      toast.error(
+          "Invalid email or password"
+      );
+
+      triggerShake();
+
+    }
+    finally{
+
+      setLoading(false);
+
+    }
+
+  };
+
+
+
+  return (
+
+      <main className="login-page">
+
+
+        <div className="login-overlay"></div>
+
+
+
+        <section
+            className={
+              shake
+                  ?
+                  "food-login-card shake"
+                  :
+                  "food-login-card"
+            }
+        >
+
+
+
+          <div className="login-logo">
+
+
+            <img
+                src={assets.logo}
+                alt="Foodies"
+            />
+
+
+            <h2>
+              Foodies
+            </h2>
+
+
           </div>
-        </div>
-      </div>
-    </div>
+
+
+
+          <h1>
+            Welcome Back 🍔
+          </h1>
+
+
+          <p className="login-subtitle">
+            Login to order your favourite meals
+          </p>
+
+
+
+
+          <form onSubmit={onSubmitHandler}>
+
+
+            <div className="input-box">
+
+              <i className="bi bi-envelope-fill"></i>
+
+              <input
+                  type="email"
+                  placeholder="Email address"
+                  name="email"
+                  value={data.email}
+                  onChange={onChangeHandler}
+                  required
+              />
+
+            </div>
+
+
+
+
+            <div className="input-box">
+
+
+              <i className="bi bi-lock-fill"></i>
+
+
+              <input
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={data.password}
+                  onChange={onChangeHandler}
+                  required
+              />
+
+
+            </div>
+
+
+
+
+            <button
+                type="submit"
+                className="food-login-btn"
+                disabled={loading}
+            >
+
+              {
+                loading
+                    ?
+                    <>
+                      <span className="spinner-border spinner-border-sm"></span>
+                      Signing in...
+                    </>
+                    :
+                    <>
+                      Login
+                      <i className="bi bi-arrow-right"></i>
+                    </>
+              }
+
+
+            </button>
+
+
+
+
+
+            <button
+                type="reset"
+                className="reset-btn"
+            >
+
+              Reset
+
+            </button>
+
+
+
+          </form>
+
+
+
+
+          <p className="register-text">
+
+            Don't have an account?
+
+            <Link to="/register">
+              Create Account
+            </Link>
+
+
+          </p>
+
+
+
+        </section>
+
+
+
+      </main>
+
   );
+
 };
+
 
 export default Login;

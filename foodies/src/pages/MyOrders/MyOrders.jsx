@@ -1,74 +1,316 @@
-import React, { useEffect, useState } from "react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+
 import { StoreContext } from "../../context/StoreContext";
-import axios from "axios";
 import { assets } from "../../assets/assets";
-import "./MyOrders.css";
+
 import { fetchUserOrders } from "../../service/orderService";
 
-const MyOrders = () => {
-  const { token } = useContext(StoreContext);
-  const [data, setData] = useState([]);
+import "./MyOrders.css";
 
-  const fetchOrders = async () => {
-    const response = await fetchUserOrders(token);
-    setData(response);
+
+const MyOrders = () => {
+
+
+  const { token } = useContext(StoreContext);
+
+
+  const [data,setData] = useState([]);
+
+  const [loading,setLoading] = useState(false);
+
+
+
+
+
+  const fetchOrders = async()=>{
+
+
+    try{
+
+
+      setLoading(true);
+
+
+      const response =
+          await fetchUserOrders(token);
+
+
+      setData(response || []);
+
+
+
+    }
+
+    catch(error){
+
+
+      console.log(
+          "Order fetch error",
+          error
+      );
+
+
+    }
+
+    finally{
+
+      setLoading(false);
+
+    }
+
+
   };
 
-  useEffect(() => {
-    if (token) {
+
+
+
+
+
+
+  useEffect(()=>{
+
+
+    if(token){
+
       fetchOrders();
+
     }
-  }, [token]);
+
+
+  },[token]);
+
+
+
+
+
+
+
+
+  if(loading){
+
+
+    return (
+
+        <div className="orders-loading">
+
+          Loading orders... 🍔
+
+        </div>
+
+    );
+
+
+  }
+
+
+
+
+
+
 
   return (
-    <div className="container">
-      <div className="py-5 row justify-content-center">
-        <div className="col-11 card">
-          <table className="table table-responsive">
-            <tbody>
-              {data.map((order, index) => {
-                return (
-                  <tr key={index}>
-                    <td>
-                      <img
-                        src={assets.delivery}
-                        alt=""
-                        height={48}
-                        width={48}
-                      />
-                    </td>
-                    <td>
-                      {order.orderedItems.map((item, index) => {
-                        if (index === order.orderedItems.length - 1) {
-                          return item.name + " x " + item.quantity;
-                        } else {
-                          return item.name + " x " + item.quantity + ", ";
-                        }
-                      })}
-                    </td>
-                    <td>&#x20B9;{order.amount.toFixed(2)}</td>
-                    <td>Items: {order.orderedItems.length}</td>
-                    <td className="fw-bold text-capitalize">
-                      &#x25cf;{order.orderStatus}
-                    </td>
-                    <td>
-                      <button
-                        className="btn btn-sm btn-warning"
-                        onClick={fetchOrders}
-                      >
-                        <i className="bi bi-arrow-clockwise"></i>
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+
+
+      <main className="orders-page">
+
+
+        <div className="container py-5">
+
+
+
+          <h1 className="orders-title">
+
+            My Orders 🍔
+
+          </h1>
+
+
+
+
+
+          {
+
+            data.length===0 ?
+
+
+                <div className="empty-orders">
+
+
+                  <i className="bi bi-bag-x"></i>
+
+
+                  <h3>
+                    No orders yet
+                  </h3>
+
+
+                  <p>
+                    Your delicious meals will appear here.
+                  </p>
+
+
+                </div>
+
+
+
+                :
+
+
+                <div className="orders-wrapper">
+
+
+
+                  {
+                    data.map((order,index)=>(
+
+
+                        <div
+                            className="order-card"
+                            key={index}
+                        >
+
+
+
+                          <div className="delivery-box">
+
+
+                            <img
+
+                                src={assets.delivery}
+
+                                alt="delivery"
+
+                            />
+
+
+                          </div>
+
+
+
+
+
+
+                          <div className="order-info">
+
+
+                            <h5>
+
+
+                              {
+                                order.orderedItems.map(
+                                    (item,i)=>
+
+                                        `${item.name} x ${item.quantity}${
+                                            i !== order.orderedItems.length-1
+                                                ? ", "
+                                                :""
+                                        }`
+
+                                )
+
+                              }
+
+
+                            </h5>
+
+
+
+                            <p>
+
+                              Items:
+                              {" "}
+                              {order.orderedItems.length}
+
+                            </p>
+
+
+                          </div>
+
+
+
+
+
+
+
+                          <div className="order-total">
+
+
+                            ₹
+                            {Number(order.amount).toFixed(2)}
+
+
+                          </div>
+
+
+
+
+
+
+
+
+                          <div
+
+                              className={`order-status 
+${order.orderStatus
+                                  .toLowerCase()
+                                  .replaceAll(" ","-")}`}
+
+                          >
+
+
+                            ● {order.orderStatus}
+
+
+                          </div>
+
+
+
+
+
+
+                          <button
+
+                              className="refresh-btn"
+
+                              onClick={fetchOrders}
+
+                          >
+
+
+                            <i className="bi bi-arrow-clockwise"></i>
+
+
+                          </button>
+
+
+
+
+                        </div>
+
+
+                    ))
+
+                  }
+
+
+
+                </div>
+
+
+          }
+
+
+
         </div>
-      </div>
-    </div>
+
+
+      </main>
+
+
   );
+
+
 };
+
 
 export default MyOrders;

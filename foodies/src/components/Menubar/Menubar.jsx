@@ -1,149 +1,372 @@
-import React, { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Menubar.css";
+
 import { assets } from "../../assets/assets";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { StoreContext } from "../../context/StoreContext";
 
+
 const Menubar = () => {
-  const [active, setActive] = useState("home");
-  const { quantities, token, setToken, setQuantities } =
-    useContext(StoreContext);
-  const uniqueItemsInCart = Object.values(quantities).filter(
-    (qty) => qty > 0
-  ).length;
+
+
+  const {
+    quantities,
+    token,
+    setToken,
+    setQuantities
+
+  } = useContext(StoreContext);
+
+
+
   const navigate = useNavigate();
 
-  const logout = () => {
+  const location = useLocation();
+
+
+
+  const [cartAnimation,setCartAnimation] = useState(false);
+
+
+
+  const cartCount = Object.values(quantities)
+      .filter((qty)=>qty>0)
+      .length;
+
+
+
+
+  useEffect(()=>{
+
+
+    if(cartCount===0) return;
+
+
+    setCartAnimation(true);
+
+
+    const timer=setTimeout(()=>{
+
+      setCartAnimation(false);
+
+    },400);
+
+
+
+    return ()=>clearTimeout(timer);
+
+
+
+  },[cartCount]);
+
+
+
+
+
+  const logout = ()=>{
+
+
     localStorage.removeItem("token");
+
     setToken("");
+
     setQuantities({});
+
+
     navigate("/");
+
+
   };
+
+
+
+
+
+
+  const isActive=(path)=>{
+
+    return location.pathname===path;
+
+  };
+
+
+
+
+
+
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container">
-        <Link to="/">
-          <img
-            src={assets.logo}
-            alt=""
-            className="mx-4"
-            height={48}
-            width={48}
-          />
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link
-                className={
-                  active === "home" ? "nav-link fw-bold active" : "nav-link"
-                }
+
+      <nav className="food-navbar">
+
+
+        <div className="container-fluid px-4">
+
+
+          <div className="navbar-wrapper">
+
+
+            {/* LOGO */}
+
+            <Link
                 to="/"
-                onClick={() => setActive("home")}
+                className="navbar-brand"
+            >
+
+
+              <img
+                  src={assets.logo}
+                  alt="Foodies"
+                  className="nav-logo"
+              />
+
+
+              <span className="brand-name">
+                            Foodies
+                        </span>
+
+
+            </Link>
+
+
+
+
+
+
+
+            {/* MENU */}
+
+
+            <div className="nav-links">
+
+
+              <Link
+                  to="/"
+                  className={
+                    isActive("/")
+                        ?
+                        "food-nav-link active-link"
+                        :
+                        "food-nav-link"
+                  }
               >
                 Home
               </Link>
-            </li>
-            <li className="nav-item">
+
+
+
               <Link
-                className={
-                  active === "explore" ? "nav-link fw-bold active" : "nav-link"
-                }
-                to="/explore"
-                onClick={() => setActive("explore")}
+                  to="/explore"
+                  className={
+                    isActive("/explore")
+                        ?
+                        "food-nav-link active-link"
+                        :
+                        "food-nav-link"
+                  }
               >
                 Explore
               </Link>
-            </li>
-            <li className="nav-item">
+
+
+
+
               <Link
-                className={
-                  active === "contact-us"
-                    ? "nav-link fw-bold active"
-                    : "nav-link"
-                }
-                to="/contact"
-                onClick={() => setActive("contact-us")}
+                  to="/contact"
+                  className={
+                    isActive("/contact")
+                        ?
+                        "food-nav-link active-link"
+                        :
+                        "food-nav-link"
+                  }
               >
-                Contact us
+                Contact
               </Link>
-            </li>
-          </ul>
-          <div className="d-flex align-items-center gap-4">
-            <Link to={`/cart`}>
-              <div className="position-relative">
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+            {/* RIGHT SIDE */}
+
+
+            <div className="nav-actions">
+
+
+
+
+
+              {/* CART */}
+
+
+              <Link
+                  to="/cart"
+                  className={
+                    cartAnimation
+                        ?
+                        "cart-wrapper cart-animation"
+                        :
+                        "cart-wrapper"
+                  }
+              >
+
+
                 <img
-                  src={assets.cart}
-                  alt=""
-                  height={28}
-                  width={28}
-                  className="position-relative"
+                    src={assets.cart}
+                    alt="cart"
                 />
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                  {uniqueItemsInCart}
-                </span>
-              </div>
-            </Link>
-            {!token ? (
-              <>
-                <button
-                  className="btn btn-outline-primary btn-sm"
-                  onClick={() => navigate("/login")}
-                >
-                  Login
-                </button>
-                <button
-                  className="btn btn-outline-success btn-sm"
-                  onClick={() => navigate("/register")}
-                >
-                  Register
-                </button>
-              </>
-            ) : (
-              <div className="dropdown text-end">
-                <a
-                  href="#"
-                  className="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <img
-                    src={assets.profile}
-                    alt=""
-                    width={32}
-                    height={32}
-                    className="rounded-circle"
-                  />
-                </a>
-                <ul className="dropdown-menu text-small">
-                  <li
-                    className="dropdown-item"
-                    onClick={() => navigate("/myorders")}
-                  >
-                    Orders
-                  </li>
-                  <li className="dropdown-item" onClick={logout}>
-                    Logout
-                  </li>
-                </ul>
-              </div>
-            )}
+
+
+                {
+                    cartCount>0 &&
+
+                    <span className="cart-count">
+                                    {cartCount}
+                                </span>
+
+                }
+
+
+
+              </Link>
+
+
+
+
+
+
+
+              {
+
+                !token ?
+
+                    <>
+
+
+                      <button
+
+                          className="login-btn"
+
+                          onClick={()=>navigate("/login")}
+
+                      >
+
+                        Login
+
+                      </button>
+
+
+
+
+
+                      <button
+
+                          className="register-btn"
+
+                          onClick={()=>navigate("/register")}
+
+                      >
+
+                        Register
+
+                      </button>
+
+
+
+                    </>
+
+
+                    :
+
+
+                    <div className="dropdown">
+
+
+                      <button
+
+                          className="profile-btn dropdown-toggle"
+
+                          data-bs-toggle="dropdown"
+
+                      >
+
+
+                        <img
+
+                            src={assets.profile}
+
+                            alt="profile"
+
+                        />
+
+
+                      </button>
+
+
+
+
+
+                      <ul className="dropdown-menu profile-menu">
+
+
+                        <li
+
+                            onClick={()=>navigate("/myorders")}
+
+                        >
+
+                          🛍️ My Orders
+
+                        </li>
+
+
+
+                        <li
+
+                            onClick={logout}
+
+                        >
+
+                          🚪 Logout
+
+                        </li>
+
+
+
+                      </ul>
+
+
+                    </div>
+
+
+              }
+
+
+
+            </div>
+
+
+
           </div>
+
+
         </div>
-      </div>
-    </nav>
+
+
+
+      </nav>
+
   );
+
 };
+
 
 export default Menubar;

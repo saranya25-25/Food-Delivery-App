@@ -1,23 +1,93 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import {assets} from '../../assets/assets';
+import { Link, useLocation } from "react-router-dom";
+import { assets } from "../../assets/assets";
+import "./Sidebar.css";
 
-const Sidebar = ({sidebarVisible}) => {
+const menuItems = [
+  {
+    title: "Add Food",
+    icon: "bi-plus-circle-fill",
+    path: "/add",
+  },
+  {
+    title: "Food List",
+    icon: "bi-grid-fill",
+    path: "/list",
+  },
+  {
+    title: "Orders",
+    icon: "bi-bag-check-fill",
+    path: "/orders",
+  },
+];
+
+const Sidebar = ({ sidebarVisible }) => {
+  const location = useLocation();
+
   return (
-    <div className={`border-end bg-white ${sidebarVisible ? '': 'd-none'}`} id="sidebar-wrapper">
-        <div className="sidebar-heading border-bottom bg-light">
-            <img src={assets.logo} alt="" height={32} width={32}/>
+      <aside
+          className={`sidebar ${
+              sidebarVisible ? "sidebar-open" : "sidebar-close"
+          }`}
+      >
+        {/* Logo */}
+
+        <div className="sidebar-top">
+
+          <img
+              src={assets.logo}
+              alt="Logo"
+              className="sidebar-logo"
+          />
+
+          <h4 className="sidebar-title">
+            Foodies
+          </h4>
+
+          <small className="sidebar-subtitle">
+            Admin Panel
+          </small>
+
         </div>
-        <div className="list-group list-group-flush">
-            <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/add">
-            <i className='bi bi-plus-circle me-2'></i> Add Food</Link>
-            <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/list">
-            <i className='bi bi-list-ul me-2'></i> List Food</Link>
-            <Link className="list-group-item list-group-item-action list-group-item-light p-3" to="/orders">
-            <i className='bi bi-cart me-2'></i> Orders</Link>
+
+        {/* Navigation */}
+
+        <div className="sidebar-menu">
+
+          {menuItems.map((item) => (
+
+              <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`sidebar-item ${
+                      location.pathname === item.path ? "active" : ""
+                  }`}
+              >
+                <i className={`bi ${item.icon}`}></i>
+
+                <span>{item.title}</span>
+
+              </Link>
+
+          ))}
+
         </div>
-    </div>
-  )
-}
+
+        {/* Footer */}
+
+        <div className="sidebar-footer">
+
+          <div className="version-box">
+
+            <i className="bi bi-shield-check"></i>
+
+            <span>Version 1.0</span>
+
+          </div>
+
+        </div>
+
+      </aside>
+  );
+};
 
 export default Sidebar;

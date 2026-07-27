@@ -1,10 +1,124 @@
+/* ==========================================================
+   Contact
+   Card entrance, staggered fields, focus glow, success morph
+   ========================================================== */
+
 .contact-form {
-    background-color: #f8f9fa;
-    border-radius: 20px;
+  background-color: #f8f9fa;
+  border-radius: 20px;
+  animation: formEntrance 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes formEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-heading {
+  animation: headingFadeIn 0.4s ease both;
+}
+
+@keyframes headingFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---------- Fields ---------- */
+
+.field-in {
+  animation: fieldFadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fieldFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .custom-input {
-    border-radius: 10px;
-    padding: 12px;
-    border: 2px solid #e9ecef;
+  border-radius: 10px;
+  padding: 12px;
+  border: 2px solid #e9ecef;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.custom-input:focus {
+  border-color: tomato;
+  box-shadow: 0 0 0 4px rgba(255, 99, 71, 0.15);
+  transform: translateY(-1px);
+}
+
+/* ---------- Send button ---------- */
+
+.send-btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.send-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(13, 110, 253, 0.25);
+}
+
+.send-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ---------- Success state ---------- */
+
+.contact-success {
+  animation: successIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes successIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.success-icon {
+  font-size: 3.5rem;
+  color: #198754;
+  animation: successPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+@keyframes successPop {
+  from {
+    opacity: 0;
+    transform: scale(0.4) rotate(-15deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-form,
+  .contact-heading,
+  .field-in,
+  .custom-input,
+  .send-btn,
+  .contact-success,
+  .success-icon {
+    animation: none !important;
+    transition: none !important;
+  }
 }

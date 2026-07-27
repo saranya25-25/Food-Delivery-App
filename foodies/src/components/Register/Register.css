@@ -1,9 +1,586 @@
-.register-container {
-    background-image: url("../../assets/login.jpeg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
+/* =========================================
+   FOODIES REGISTER PAGE
+   Premium Restaurant Signup UI
+========================================= */
+
+
+.register-page{
+
+  min-height:100vh;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  position:relative;
+
+  padding:40px 20px;
+
+
+  background:
+
+          linear-gradient(
+                  rgba(0,0,0,.65),
+                  rgba(0,0,0,.65)
+          ),
+
+          url("../../assets/login.jpg");
+
+
+  background-size:cover;
+
+  background-position:center;
+
+  animation:
+          registerZoom 18s ease-in-out infinite alternate;
+
+}
+
+
+
+@keyframes registerZoom{
+
+  from{
+    background-size:100%;
+  }
+
+  to{
+    background-size:112%;
+  }
+
+}
+
+
+
+
+.register-overlay{
+
+  position:absolute;
+
+  inset:0;
+
+
+  background:
+
+          radial-gradient(
+                  circle at top right,
+                  rgba(255,99,71,.35),
+                  transparent 35%
+          );
+
+}
+
+
+
+
+/* CARD */
+
+
+.food-register-card{
+
+
+  position:relative;
+
+  z-index:2;
+
+
+  width:430px;
+
+
+  padding:40px;
+
+
+  border-radius:30px;
+
+
+  background:
+
+          rgba(255,255,255,.92);
+
+
+  backdrop-filter:blur(20px);
+
+
+  box-shadow:
+
+          0 30px 80px rgba(0,0,0,.35);
+
+
+  animation:
+
+          registerShow .6s ease;
+
+}
+
+
+
+
+@keyframes registerShow{
+
+
+  from{
+
+    opacity:0;
+
+    transform:
+
+            translateY(40px)
+            scale(.96);
+
+  }
+
+
+  to{
+
+    opacity:1;
+
+    transform:
+
+            translateY(0)
+            scale(1);
+
+  }
+
+
+}
+
+
+
+
+
+/* LOGO */
+
+
+.register-logo{
+
+  text-align:center;
+
+}
+
+
+
+.register-logo img{
+
+
+  width:70px;
+
+
+  animation:
+
+          floatLogo 3s infinite;
+
+}
+
+
+
+@keyframes floatLogo{
+
+
+  50%{
+
+    transform:translateY(-8px);
+
+  }
+
+}
+
+
+
+
+.register-logo h2{
+
+
+  font-size:34px;
+
+  font-weight:900;
+
+
+  background:
+
+          linear-gradient(
+                  135deg,
+                  tomato,
+                  orange
+          );
+
+
+  -webkit-background-clip:text;
+
+  color:transparent;
+
+}
+
+
+
+
+
+.food-register-card h1{
+
+
+  text-align:center;
+
+  font-weight:900;
+
+  margin-top:20px;
+
+  color:#111827;
+
+}
+
+
+
+
+.register-subtitle{
+
+
+  text-align:center;
+
+  color:#64748b;
+
+  margin-bottom:30px;
+
+}
+
+
+
+
+
+/* INPUT */
+
+
+.register-input-box{
+
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+
+  background:white;
+
+
+  padding:14px 18px;
+
+
+  border-radius:18px;
+
+
+  margin-bottom:18px;
+
+
+  border:1px solid #ddd;
+
+
+  transition:.3s ease;
+
+}
+
+
+
+
+.register-input-box:focus-within{
+
+
+  border-color:tomato;
+
+
+  box-shadow:
+
+          0 0 0 4px rgba(255,99,71,.15);
+
+
+  transform:translateY(-3px);
+
+}
+
+
+
+
+
+.register-input-box i{
+
+
+  color:tomato;
+
+  font-size:18px;
+
+}
+
+
+
+
+.register-input-box input{
+
+
+  width:100%;
+
+  border:none;
+
+  outline:none;
+
+  font-size:15px;
+
+}
+
+
+
+
+
+/* PASSWORD STRENGTH */
+
+
+.strength-meter{
+
+  margin-bottom:20px;
+
+}
+
+
+
+.strength-track{
+
+
+  height:6px;
+
+  width:100%;
+
+
+  background:#e5e7eb;
+
+
+  border-radius:20px;
+
+
+  overflow:hidden;
+
+}
+
+
+
+.strength-fill{
+
+
+  height:100%;
+
+
+  border-radius:20px;
+
+
+  transition:.3s ease;
+
+}
+
+
+
+.strength-label{
+
+
+  font-weight:700;
+
+}
+
+
+
+
+
+/* BUTTON */
+
+
+.food-register-btn{
+
+
+  width:100%;
+
+
+  padding:15px;
+
+
+  border:none;
+
+
+  border-radius:50px;
+
+
+  background:
+
+          linear-gradient(
+                  135deg,
+                  tomato,
+                  orange
+          );
+
+
+  color:white;
+
+
+  font-size:17px;
+
+
+  font-weight:800;
+
+
+  display:flex;
+
+
+  justify-content:center;
+
+
+  align-items:center;
+
+
+  gap:10px;
+
+
+  transition:.3s;
+
+}
+
+
+
+.food-register-btn:hover{
+
+
+  transform:translateY(-4px);
+
+
+  box-shadow:
+
+          0 15px 35px rgba(255,99,71,.45);
+
+}
+
+
+
+
+.register-reset-btn{
+
+
+  width:100%;
+
+
+  margin-top:12px;
+
+
+  padding:12px;
+
+
+  border-radius:50px;
+
+
+  border:2px solid tomato;
+
+
+  background:white;
+
+
+  color:tomato;
+
+
+  font-weight:700;
+
+
+  transition:.3s;
+
+}
+
+
+
+
+.register-reset-btn:hover{
+
+
+  background:tomato;
+
+  color:white;
+
+}
+
+
+
+
+
+.login-text{
+
+
+  text-align:center;
+
+  margin-top:25px;
+
+}
+
+
+
+
+.login-text a{
+
+
+  color:tomato;
+
+  font-weight:700;
+
+  text-decoration:none;
+
+}
+
+
+
+
+
+.shake{
+
+
+  animation:shake .5s;
+
+}
+
+
+
+
+@keyframes shake{
+
+
+  25%{
+
+    transform:translateX(-8px);
+
+  }
+
+
+  50%{
+
+    transform:translateX(8px);
+
+  }
+
+
+  75%{
+
+    transform:translateX(-8px);
+
+  }
+
+
+}
+
+
+
+
+
+@media(max-width:600px){
+
+
+  .food-register-card{
+
+
+    width:100%;
+
+    padding:30px;
+
+  }
+
+
 }

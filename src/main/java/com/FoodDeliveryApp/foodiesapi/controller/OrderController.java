@@ -4,7 +4,7 @@ import com.FoodDeliveryApp.foodiesapi.io.OrderRequest;
 import com.FoodDeliveryApp.foodiesapi.io.OrderResponse;
 import com.FoodDeliveryApp.foodiesapi.service.OrderService;
 import com.razorpay.RazorpayException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,42 +13,71 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
-@AllArgsConstructor
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class OrderController {
+
     private final OrderService orderService;
 
+    /**
+     * Create Order and Razorpay Payment
+     */
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponse createOrderWithPayment(@RequestBody OrderRequest request) throws RazorpayException {
-        OrderResponse response = orderService.createOrderWithPayment(request);
-        return response;
+    public OrderResponse createOrderWithPayment(
+            @RequestBody OrderRequest request)
+            throws RazorpayException {
+
+        return orderService.createOrderWithPayment(request);
     }
 
+    /**
+     * Verify Razorpay Payment
+     */
     @PostMapping("/verify")
-    public void verifyPayment(@RequestBody Map<String, String> paymentData) {
+    @ResponseStatus(HttpStatus.OK)
+    public void verifyPayment(
+            @RequestBody Map<String, String> paymentData) {
+
         orderService.verifyPayment(paymentData, "Paid");
     }
 
+    /**
+     * Logged-in User Orders
+     */
     @GetMapping
     public List<OrderResponse> getOrders() {
         return orderService.getUserOrders();
     }
 
+    /**
+     * Delete Order
+     */
     @DeleteMapping("/{orderId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOrder(@PathVariable String orderId) {
+    public void deleteOrder(
+            @PathVariable String orderId) {
+
         orderService.removeOrder(orderId);
     }
 
-    //admin panel
+    /**
+     * Admin - Get All Orders
+     */
     @GetMapping("/all")
     public List<OrderResponse> getOrdersOfAllUsers() {
         return orderService.getOrdersOfAllUsers();
     }
 
-    //admin panel
+    /**
+     * Admin - Update Order Status
+     */
     @PatchMapping("/status/{orderId}")
-    public void updateOrderStatus(@PathVariable String orderId, @RequestParam String status) {
+    @ResponseStatus(HttpStatus.OK)
+    public void updateOrderStatus(
+            @PathVariable String orderId,
+            @RequestParam String status) {
+
         orderService.updateOrderStatus(orderId, status);
     }
 }
