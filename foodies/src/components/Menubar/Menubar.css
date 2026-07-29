@@ -463,46 +463,39 @@
 /* MOBILE */
 
 
-@media(max-width:768px){
+@media(max-width:768px) {
 
 
-  .navbar-wrapper{
+  .navbar-wrapper {
 
 
-    flex-direction:column;
+    flex-direction: column;
 
-    gap:20px;
-
-  }
-
-
-
-  .nav-links{
-
-
-    gap:20px;
+    gap: 20px;
 
   }
 
 
+  .nav-links {
 
-  .nav-actions{
 
-
-    flex-wrap:wrap;
-
-    justify-content:center;
+    gap: 20px;
 
   }
 
 
+  .nav-actions {
+
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+  }
 }
 
 
-
-
 @media(prefers-reduced-motion:reduce){
-
 
   *{
 
