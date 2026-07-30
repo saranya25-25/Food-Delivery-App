@@ -4,41 +4,20 @@ import { StoreContext } from "../../context/StoreContext";
 import FoodItem from "../FoodItem/FoodItem";
 
 import "./FoodDisplay.css";
-
-
-
 const FoodDisplay = ({ category, searchText }) => {
-
-
     const { foodList } = useContext(StoreContext);
-
-
-
     const foods = foodList || [];
-
-
-
     const filteredFoods = foods.filter((food)=>{
-
-
         const matchesCategory =
             category === "All" ||
             food.category === category;
-
-
-
         const matchesSearch =
             food.name
                 .toLowerCase()
                 .includes(
                     searchText.trim().toLowerCase()
                 );
-
-
-
         return matchesCategory && matchesSearch;
-
-
     });
 
 
