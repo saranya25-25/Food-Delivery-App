@@ -133,8 +133,6 @@ const App = () => {
                                 </AnimatedPage>
                         }
                     />
-
-
                     <Route
                         path="/login"
                         element={
