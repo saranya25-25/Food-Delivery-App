@@ -1,0 +1,508 @@
+.food-navbar{
+
+  position:sticky;
+  top:0;
+
+  z-index:1000;
+
+  padding:14px 0;
+
+  background:
+          rgba(255,255,255,.85);
+
+  backdrop-filter:blur(15px);
+
+
+  box-shadow:
+          0 8px 30px rgba(0,0,0,.08);
+
+
+}
+
+
+
+
+.navbar-wrapper{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+}
+
+
+
+
+/* LOGO */
+
+
+.navbar-brand{
+
+  display:flex;
+
+  align-items:center;
+
+  text-decoration:none;
+
+}
+
+
+
+.nav-logo{
+
+  width:52px;
+
+  height:52px;
+
+  transition:.4s ease;
+
+}
+
+
+
+.navbar-brand:hover .nav-logo{
+
+  transform:
+          rotate(-10deg)
+          scale(1.1);
+
+}
+
+
+
+.brand-name{
+
+  margin-left:10px;
+
+  font-size:26px;
+
+  font-weight:900;
+
+
+  background:
+          linear-gradient(
+                  90deg,
+                  tomato,
+                  orange
+          );
+
+
+  -webkit-background-clip:text;
+
+  color:transparent;
+
+}
+
+
+
+
+
+/* LINKS */
+
+
+.nav-links{
+
+  display:flex;
+
+  gap:35px;
+
+}
+
+
+
+.food-nav-link{
+
+  position:relative;
+
+  text-decoration:none;
+
+  color:#334155;
+
+  font-weight:600;
+
+  transition:.3s;
+
+}
+
+
+
+.food-nav-link:hover{
+
+  color:tomato;
+
+}
+
+
+
+.food-nav-link::after{
+
+
+  content:"";
+
+  position:absolute;
+
+  bottom:-8px;
+
+  left:0;
+
+  width:0;
+
+  height:3px;
+
+  border-radius:10px;
+
+
+  background:tomato;
+
+
+  transition:.3s;
+
+}
+
+
+
+.food-nav-link:hover::after,
+.active-link::after{
+
+
+  width:100%;
+
+}
+
+
+
+.active-link{
+
+  color:tomato;
+
+}
+
+
+
+
+
+
+
+/* ACTIONS */
+
+
+.nav-actions{
+
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+
+}
+
+
+
+
+
+
+/* CART */
+
+
+.cart-wrapper{
+
+
+  position:relative;
+
+}
+
+
+
+.cart-wrapper img{
+
+
+  width:35px;
+
+  transition:.3s;
+
+}
+
+
+
+.cart-wrapper:hover img{
+
+  transform:
+          scale(1.15);
+
+}
+
+
+
+.cart-count{
+
+
+  position:absolute;
+
+  top:-8px;
+
+  right:-10px;
+
+
+  width:22px;
+
+  height:22px;
+
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+
+  background:
+          linear-gradient(
+                  135deg,
+                  tomato,
+                  orange
+          );
+
+
+  color:white;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  border-radius:50%;
+
+
+}
+
+
+
+.cart-animation img{
+
+
+  animation:
+          cartBounce .4s ease;
+
+
+}
+
+
+
+@keyframes cartBounce{
+
+
+  50%{
+
+    transform:
+            scale(1.3)
+            rotate(-10deg);
+
+  }
+
+}
+
+
+
+
+
+/* BUTTONS */
+
+
+.login-btn,
+.register-btn{
+
+
+  border:none;
+
+  padding:10px 22px;
+
+  border-radius:30px;
+
+  font-weight:700;
+
+  transition:.3s;
+
+}
+
+
+
+.login-btn{
+
+
+  background:white;
+
+  border:2px solid tomato;
+
+  color:tomato;
+
+}
+
+
+
+.register-btn{
+
+
+  background:
+          linear-gradient(
+                  135deg,
+                  tomato,
+                  orange
+          );
+
+
+  color:white;
+
+}
+
+
+
+.login-btn:hover,
+.register-btn:hover{
+
+
+  transform:
+          translateY(-3px);
+
+
+  box-shadow:
+          0 10px 20px rgba(255,99,71,.25);
+
+
+}
+
+
+
+
+
+
+/* PROFILE */
+
+
+.profile-btn{
+
+
+  border:none;
+
+  background:none;
+
+}
+
+
+
+.profile-btn img{
+
+
+  width:42px;
+
+  height:42px;
+
+
+  border-radius:50%;
+
+
+  border:3px solid tomato;
+
+}
+
+
+
+.profile-menu{
+
+
+  border:none;
+
+  border-radius:18px;
+
+
+  padding:10px;
+
+
+  box-shadow:
+          0 15px 40px rgba(0,0,0,.15);
+
+
+}
+
+
+
+.profile-menu li{
+
+
+  list-style:none;
+
+  padding:12px 20px;
+
+  cursor:pointer;
+
+  border-radius:10px;
+
+  font-weight:600;
+
+}
+
+
+
+.profile-menu li:hover{
+
+
+  background:
+          rgba(255,99,71,.1);
+
+  color:tomato;
+
+
+}
+
+
+
+
+
+
+/* MOBILE */
+
+
+@media(max-width:768px) {
+
+
+  .navbar-wrapper {
+
+
+    flex-direction: column;
+
+    gap: 20px;
+
+  }
+
+
+  .nav-links {
+
+
+    gap: 20px;
+
+  }
+
+
+  .nav-actions {
+
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+  }
+}
+
+
+@media(prefers-reduced-motion:reduce){
+
+  *{
+
+    animation:none!important;
+
+    transition:none!important;
+
+  }
+
+}

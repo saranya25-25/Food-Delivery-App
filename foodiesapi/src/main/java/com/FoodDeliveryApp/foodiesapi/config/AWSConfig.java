@@ -1,5 +1,6 @@
 package com.FoodDeliveryApp.foodiesapi.config;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,13 @@ public class AWSConfig {
                         .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
                         .build();
         }
+////        import jakarta.annotation.PostConstruct;
+//
+//        @PostConstruct
+//        public void printConfig() {
+//                System.out.println("AWS Region = " + region);
+//                System.out.println("Bucket Name = " + System.getenv("AWS_BUCKET_NAME"));
+//        }
 
 
 }

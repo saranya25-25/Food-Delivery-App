@@ -1,14 +1,12 @@
 package com.FoodDeliveryApp.foodiesapi.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.FoodDeliveryApp.foodiesapi.io.FoodRequest;
 import com.FoodDeliveryApp.foodiesapi.io.FoodResponse;
 import com.FoodDeliveryApp.foodiesapi.service.FoodService;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,24 +15,33 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/foods")
-@AllArgsConstructor
-@CrossOrigin("*")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class FoodController {
-    private final FoodService foodService;
-    @PostMapping
-public FoodResponse addFood(@RequestPart("food") String foodString, @RequestPart("file") MultipartFile file){
-    ObjectMapper objectMapper=new ObjectMapper();
-    FoodRequest request=null;
-    try{
-        request=objectMapper.readValue(foodString,FoodRequest.class);
-    }
-    catch(JsonProcessingException ex){
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Invalid JSON Format");
 
+    private final FoodService foodService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public FoodResponse addFood(
+            @RequestPart("food") String foodString,
+            @RequestPart("file") MultipartFile file) {
+
+        try {
+            FoodRequest request =
+                    objectMapper.readValue(foodString, FoodRequest.class);
+
+            return foodService.addFood(request, file);
+
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid food JSON format."
+            );
+        }
     }
-    FoodResponse response=foodService.addFood(request,file);
-return response;
-    }
+
     @GetMapping
     public List<FoodResponse> readFoods() {
         return foodService.readFoods();
@@ -50,6 +57,5 @@ return response;
     public void deleteFood(@PathVariable String id) {
         foodService.deleteFood(id);
     }
-
 
 }

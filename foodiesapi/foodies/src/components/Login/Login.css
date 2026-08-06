@@ -1,0 +1,650 @@
+/* =========================================
+ FOODIES LOGIN PAGE
+ Premium Restaurant Authentication UI
+========================================= */
+
+
+.login-page{
+
+
+    min-height:100vh;
+
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  position:relative;
+
+  padding:40px 20px;
+
+
+  background:
+
+          linear-gradient(
+                  rgba(0,0,0,.65),
+                  rgba(0,0,0,.65)
+          ),
+
+          url("../../assets/login.jpg");
+
+
+  background-size:cover;
+
+  background-position:center center;
+
+
+  animation:loginZoom 18s ease-in-out infinite alternate;
+
+}
+
+
+
+
+@keyframes loginZoom{
+
+  from{
+    background-size:100%;
+  }
+
+  to{
+    background-size:112%;
+  }
+
+}
+
+
+
+
+
+
+/* dark orange food glow */
+
+.login-overlay{
+
+  position:absolute;
+
+  inset:0;
+
+
+  background:
+
+          radial-gradient(
+                  circle at top right,
+                  rgba(255,99,71,.35),
+                  transparent 35%
+          );
+
+
+}
+
+
+
+
+
+
+
+.food-login-card{
+
+
+  position:relative;
+
+  z-index:2;
+
+    width:400px;
+
+    padding:35px;
+
+
+
+  border-radius:30px;
+
+
+
+  background:
+
+          rgba(255,255,255,.92);
+
+
+
+  backdrop-filter:blur(20px);
+
+
+
+  box-shadow:
+
+          0 30px 80px rgba(0,0,0,.35);
+
+
+
+  animation:
+
+          cardShow .6s ease;
+
+
+
+}
+
+
+
+
+
+
+@keyframes cardShow{
+
+
+  from{
+
+    opacity:0;
+
+    transform:
+
+            translateY(40px)
+            scale(.96);
+
+  }
+
+
+  to{
+
+    opacity:1;
+
+    transform:
+
+            translateY(0)
+            scale(1);
+
+  }
+
+
+}
+
+
+
+
+
+
+
+
+/* LOGO */
+
+
+.login-logo{
+
+  text-align:center;
+
+}
+
+
+
+
+.login-logo img{
+
+
+  width:75px;
+
+
+  animation:
+
+          floatLogo 3s infinite;
+
+
+}
+
+
+
+
+
+@keyframes floatLogo{
+
+
+  50%{
+
+    transform:translateY(-8px);
+
+  }
+
+}
+
+
+
+
+
+
+
+.login-logo h2{
+
+
+  font-size:34px;
+
+
+  font-weight:900;
+
+
+
+  background:
+
+          linear-gradient(
+                  135deg,
+                  tomato,
+                  orange
+          );
+
+
+
+  -webkit-background-clip:text;
+
+  color:transparent;
+
+
+
+}
+
+
+
+
+
+
+.food-login-card h1{
+
+
+  text-align:center;
+
+
+  font-weight:900;
+
+
+  margin-top:20px;
+
+
+  color:#111827;
+
+}
+
+
+
+
+
+
+.login-subtitle{
+
+
+  text-align:center;
+
+
+  color:#64748b;
+
+
+  margin-bottom:30px;
+
+
+}
+
+
+
+
+
+
+
+
+/* INPUT */
+
+
+
+.input-box{
+
+
+  display:flex;
+
+
+  align-items:center;
+
+
+  gap:12px;
+
+
+
+  background:white;
+
+
+  padding:14px 18px;
+
+
+
+  border-radius:18px;
+
+
+
+  margin-bottom:18px;
+
+
+
+  border:1px solid #ddd;
+
+
+
+  transition:.3s ease;
+
+
+
+}
+
+
+
+
+
+.input-box:focus-within{
+
+
+  border-color:tomato;
+
+
+
+  box-shadow:
+
+          0 0 0 4px rgba(255,99,71,.15);
+
+
+
+  transform:translateY(-3px);
+
+
+}
+
+
+
+
+
+.input-box i{
+
+
+  color:tomato;
+
+
+  font-size:18px;
+
+
+}
+
+
+
+
+
+.input-box input{
+
+
+  width:100%;
+
+
+  border:none;
+
+
+  outline:none;
+
+
+  font-size:15px;
+
+
+}
+
+
+
+
+
+
+
+
+/* BUTTON */
+
+
+
+.food-login-btn{
+
+
+  width:100%;
+
+
+  border:none;
+
+
+
+  padding:15px;
+
+
+
+  border-radius:50px;
+
+
+
+  background:
+
+          linear-gradient(
+                  135deg,
+                  tomato,
+                  orange
+          );
+
+
+
+  color:white;
+
+
+
+  font-weight:800;
+
+
+
+  font-size:17px;
+
+
+
+  display:flex;
+
+
+
+  justify-content:center;
+
+
+
+  align-items:center;
+
+
+
+  gap:10px;
+
+
+
+  transition:.3s;
+
+
+
+}
+
+
+
+
+
+
+.food-login-btn:hover{
+
+
+  transform:translateY(-4px);
+
+
+
+  box-shadow:
+
+          0 15px 35px rgba(255,99,71,.45);
+
+
+}
+
+
+
+
+
+
+.reset-btn{
+
+
+  width:100%;
+
+
+
+  margin-top:12px;
+
+
+
+  padding:12px;
+
+
+
+  border-radius:50px;
+
+
+
+  border:2px solid tomato;
+
+
+
+  background:white;
+
+
+
+  color:tomato;
+
+
+
+  font-weight:700;
+
+
+
+  transition:.3s;
+
+
+
+}
+
+
+
+
+
+.reset-btn:hover{
+
+
+  background:tomato;
+
+  color:white;
+
+
+}
+
+
+
+
+
+
+
+.register-text{
+
+
+  text-align:center;
+
+
+  margin-top:25px;
+
+
+}
+
+
+
+
+
+.register-text a{
+
+
+  color:tomato;
+
+
+  font-weight:700;
+
+
+  text-decoration:none;
+
+
+}
+
+
+
+
+
+
+
+
+.shake{
+
+
+  animation:
+
+          shake .5s;
+
+
+}
+
+
+
+
+
+@keyframes shake{
+
+
+  25%{
+
+    transform:translateX(-8px);
+
+  }
+
+
+  50%{
+
+    transform:translateX(8px);
+
+  }
+
+
+  75%{
+
+    transform:translateX(-8px);
+
+  }
+
+
+}
+
+
+
+
+
+
+
+@media(max-width:600px){
+
+
+  .food-login-card{
+
+
+    width:100%;
+
+
+    max-width:420px;
+
+
+    padding:30px;
+
+
+  }
+
+
+}

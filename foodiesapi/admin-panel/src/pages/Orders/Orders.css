@@ -1,0 +1,183 @@
+/* =====================================================
+   ORDERS PAGE
+   Theme : Dark Slate + Emerald
+====================================================== */
+
+body{
+    background:#f4f7fb;
+}
+
+/* ================= Card ================= */
+
+.orders-card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    border:none;
+    box-shadow:0 10px 30px rgba(15,23,42,.08);
+    transition:.35s ease;
+}
+
+.orders-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 45px rgba(15,23,42,.10);
+}
+
+/* ================= Header ================= */
+
+.orders-header{
+    background:#1e293b;
+    color:#fff;
+    padding:24px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.orders-header h3{
+    margin:0;
+    font-size:28px;
+    font-weight:700;
+}
+
+.orders-header p{
+    margin-top:6px;
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+.orders-count{
+    background:#10b981;
+    color:#fff;
+    padding:8px 18px;
+    border-radius:30px;
+    font-weight:600;
+    font-size:14px;
+}
+
+/* ================= Table ================= */
+
+.orders-table{
+    margin:0;
+}
+
+.orders-table thead{
+    background:#f8fafc;
+}
+
+.orders-table th{
+    padding:18px;
+    font-size:15px;
+    color:#334155;
+    font-weight:600;
+    border:none;
+}
+
+.orders-table td{
+    padding:18px;
+    vertical-align:middle;
+    border-top:1px solid #eef2f7;
+}
+
+.orders-table tbody tr{
+    transition:.30s ease;
+}
+
+.orders-table tbody tr:hover{
+    background:#f8fffc;
+}
+
+/* ================= Parcel Image ================= */
+
+.parcel-image{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+    transition:.35s;
+}
+
+.parcel-image:hover{
+    transform:rotate(-8deg) scale(1.08);
+}
+
+/* ================= Price ================= */
+
+.order-price{
+    color:#10b981;
+    font-size:17px;
+    font-weight:700;
+}
+
+/* ================= Badge ================= */
+
+.items-badge{
+    display:inline-block;
+    background:#ecfdf5;
+    color:#059669;
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+}
+
+/* ================= Status ================= */
+
+.order-status{
+    border-radius:10px;
+    border:1px solid #cbd5e1;
+    transition:.3s;
+}
+
+.order-status:focus{
+    border-color:#10b981;
+    box-shadow:0 0 0 .18rem rgba(16,185,129,.18);
+}
+
+/* ================= Empty State ================= */
+
+.empty-orders{
+    text-align:center;
+    padding:70px 20px !important;
+    color:#64748b;
+}
+
+.empty-orders i{
+    color:#10b981;
+}
+
+.empty-orders h5{
+    font-weight:700;
+    margin-top:15px;
+}
+
+/* ================= Responsive ================= */
+
+@media(max-width:768px){
+
+    .orders-header{
+        justify-content:center;
+        text-align:center;
+        gap:15px;
+        padding:18px;
+    }
+
+    .orders-header h3{
+        font-size:22px;
+    }
+
+    .orders-table th,
+    .orders-table td{
+        font-size:14px;
+        padding:12px;
+    }
+
+    .parcel-image{
+        width:50px;
+        height:50px;
+    }
+
+    .orders-count{
+        font-size:13px;
+    }
+}
