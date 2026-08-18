@@ -195,11 +195,19 @@ const AddFood = () => {
                                             onChange={onChangeHandler}
                                         >
                                             <option>Biryani</option>
-                                            <option>Burger</option>
                                             <option>Pizza</option>
+                                            <option>Burger</option>
+                                            <option>North Indian</option>
+                                            <option>South Indian</option>
+                                            <option>Chicken</option>
+                                            <option>Noodles</option>
+                                            <option>Pasta</option>
+                                            <option>Momos</option>
                                             <option>Rolls</option>
-                                            <option>Cake</option>
+                                            <option>Sandwich</option>
+                                            <option>Fries</option>
                                             <option>Salad</option>
+                                            <option>Cake</option>
                                             <option>Ice cream</option>
                                         </select>
 

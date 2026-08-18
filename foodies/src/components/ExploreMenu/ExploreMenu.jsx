@@ -1,79 +1,153 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { categories } from "../../assets/assets";
 import "./ExploreMenu.css";
 
+const ITEMS_PER_PAGE = 8;
+
 const ExploreMenu = ({ category, setCategory }) => {
-  const menuRef = useRef(null);
-  const scrollLeft = () => {
-    if (menuRef.current) {
-      menuRef.current.scrollBy({ left: -200, behavior: "smooth" });
-    }
-  };
+    const [currentPage, setCurrentPage] = useState(0);
 
-  const scrollRight = () => {
-    if (menuRef.current) {
-      menuRef.current.scrollBy({ left: 200, behavior: "smooth" });
-    }
-  };
+    const totalPages = Math.ceil(categories.length / ITEMS_PER_PAGE);
 
-  return (
-      <div className="explore-menu position-relative">
-        <h1 className="d-flex align-items-center justify-content-between">
-          Explore Our Menu
-          <div className="d-flex">
-            <i
-                className="bi bi-arrow-left-circle scroll-icon"
-                onClick={scrollLeft}
-            ></i>
-            <i
-                className="bi bi-arrow-right-circle scroll-icon"
-                onClick={scrollRight}
-            ></i>
-          </div>
-        </h1>
-        <p>Explore curated lists of dishes from top categories</p>
-        <div
-            className="d-flex justify-content-between gap-4 overflow-auto explore-menu-list"
-            ref={menuRef}
-        >
-          {categories.map((item, index) => {
-            return (
-                <div
-                    key={index}
-                    className="text-center explore-menu-list-item"
-                    onClick={() =>
-                        setCategory((prev) =>
-                            prev === item.category ? "All" : item.category
-                        )
-                    }
-                >
-                  <img
-                      src={item.icon}
-                      alt=""
-                      className={
-                        item.category === category
-                            ? "rounded-circle active"
-                            : "rounded-circle"
-                      }
-                      height={128}
-                      width={128}
-                  />
-                  <p
-                      className={
-                        item.category === category
-                            ? "mt-2 fw-bold text-active"
-                            : "mt-2 fw-bold"
-                      }
-                  >
-                    {item.category}
-                  </p>
+    const startIndex = currentPage * ITEMS_PER_PAGE;
+
+    const visibleCategories = categories.slice(
+        startIndex,
+        startIndex + ITEMS_PER_PAGE
+    );
+
+    const goToPreviousPage = () => {
+        setCurrentPage((prev) => Math.max(prev - 1, 0));
+    };
+
+    const goToNextPage = () => {
+        setCurrentPage((prev) =>
+            Math.min(prev + 1, totalPages - 1)
+        );
+    };
+
+    const handleCategoryClick = (itemCategory) => {
+        setCategory((prev) =>
+            prev === itemCategory ? "All" : itemCategory
+        );
+    };
+
+    return (
+        <div className="explore-menu">
+
+            {/* ==============================
+          HEADER
+      ============================== */}
+
+            <div className="explore-menu-header">
+
+                <div>
+                    <h1>Explore Our Menu</h1>
+
+                    <p>
+                        Explore curated lists of dishes from top categories
+                    </p>
                 </div>
-            );
-          })}
+
+                {/* ==============================
+            PAGINATION ARROWS
+        ============================== */}
+
+                <div className="explore-menu-arrows">
+
+                    <button
+                        type="button"
+                        className="scroll-icon"
+                        onClick={goToPreviousPage}
+                        disabled={currentPage === 0}
+                        aria-label="Previous categories"
+                    >
+                        <i className="bi bi-arrow-left-circle"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        className="scroll-icon"
+                        onClick={goToNextPage}
+                        disabled={currentPage === totalPages - 1}
+                        aria-label="Next categories"
+                    >
+                        <i className="bi bi-arrow-right-circle"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            {/* ==============================
+          CATEGORY GRID
+      ============================== */}
+
+            <div className="explore-menu-list">
+
+                {visibleCategories.map((item, index) => {
+
+                    const isActive = item.category === category;
+
+                    return (
+                        <div
+                            key={`${item.category}-${index}`}
+                            className={`explore-menu-list-item ${
+                                isActive ? "active" : ""
+                            }`}
+                            onClick={() =>
+                                handleCategoryClick(item.category)
+                            }
+                        >
+
+                            <img
+                                src={item.icon}
+                                alt={item.category}
+                                className="category-image"
+                            />
+
+                            <p className={isActive ? "text-active" : ""}>
+                                {item.category}
+                            </p>
+
+                        </div>
+                    );
+
+                })}
+
+            </div>
+
+
+            {/* ==============================
+          PAGE INDICATOR
+      ============================== */}
+
+            {totalPages > 1 && (
+                <div className="explore-page-indicator">
+
+                    {Array.from({ length: totalPages }).map(
+                        (_, index) => (
+                            <span
+                                key={index}
+                                className={
+                                    index === currentPage
+                                        ? "page-dot active-dot"
+                                        : "page-dot"
+                                }
+                                onClick={() => setCurrentPage(index)}
+                            ></span>
+                        )
+                    )}
+
+                </div>
+            )}
+
+
+            <hr />
+
         </div>
-        <hr />
-      </div>
-  );
+    );
 };
 
 export default ExploreMenu;

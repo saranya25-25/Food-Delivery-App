@@ -22,9 +22,20 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody AuthenticationRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-        final String jwtToken = jwtUtil.generateToken(userDetails);
-        return new AuthenticationResponse(request.getEmail(), jwtToken);
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+            UserDetails userDetails =
+                    userDetailsService.loadUserByUsername(request.getEmail());
+            String jwtToken = jwtUtil.generateToken(userDetails);
+            return new AuthenticationResponse(request.getEmail(), jwtToken);
+        } catch (Exception e) {
+            e.printStackTrace();   // 👈 Important
+            throw e;
+        }
     }
 }

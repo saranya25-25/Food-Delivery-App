@@ -112,8 +112,13 @@ const App = () => {
                     <Route
                         path="/cart"
                         element={
+                        token?
                             <AnimatedPage>
                                 <Cart />
+                            </AnimatedPage>
+                            :
+                            <AnimatedPage>
+                                <Register/>
                             </AnimatedPage>
                         }
                     />

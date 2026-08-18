@@ -9,16 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/cart")
 @AllArgsConstructor
 public class CartController {
+
     private final CartService cartService;
+
     @PostMapping
     public CartResponse addToCart(@RequestBody CartRequest request) {
         String foodId = request.getFoodId();
+
         if (foodId == null || foodId.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "foodId not found");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "foodId not found"
+            );
         }
+
         return cartService.addToCart(request);
     }
 
@@ -36,9 +43,14 @@ public class CartController {
     @PostMapping("/remove")
     public CartResponse removeFromCart(@RequestBody CartRequest request) {
         String foodId = request.getFoodId();
+
         if (foodId == null || foodId.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "foodId not found");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "foodId not found"
+            );
         }
+
         return cartService.removeFromCart(request);
     }
 }

@@ -19,28 +19,13 @@ const FoodDisplay = ({ category, searchText }) => {
                 );
         return matchesCategory && matchesSearch;
     });
-
-
-
-
-
-
     return (
-
-
         <section className="food-display">
-
-
-
             <div className="food-section-header">
-
-
                 <div>
-
                     <span className="section-tag">
                         Fresh & Delicious
                     </span>
-
 
                     <h2>
                         Popular Dishes 🍽️
@@ -50,39 +35,16 @@ const FoodDisplay = ({ category, searchText }) => {
                     <p>
                         Explore amazing food prepared by our chefs
                     </p>
-
-
                 </div>
-
-
             </div>
-
-
-
-
-
-
-
             {
-
                 filteredFoods.length > 0
-
                     ?
-
-
                     <div className="food-grid">
-
-
                         {
-
                             filteredFoods.map((food,index)=>(
-
-
-
                                 <div
-
                                     key={food.id}
-
                                     className="food-card-wrapper"
 
                                     style={{
