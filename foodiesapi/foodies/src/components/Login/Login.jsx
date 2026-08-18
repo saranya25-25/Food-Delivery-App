@@ -224,12 +224,16 @@ const Login = () => {
 
 
             <button
-                type="reset"
+                type="button"
                 className="reset-btn"
+                onClick={() =>
+                    setData({
+                      email: "",
+                      password: "",
+                    })
+                }
             >
-
               Reset
-
             </button>
 
 

@@ -2,424 +2,377 @@
    EXPLORE MENU CONTAINER
 ============================== */
 
-.explore-menu{
-
-  width:100%;
-  padding:50px 0;
-
-}
-
-
-.explore-menu h2{
-
-  font-size:38px;
-  font-weight:900;
-  color:#111827;
-  margin-bottom:35px;
-
+.explore-menu {
+  width: 100%;
+  padding: 20px 0 10px;
 }
 
 
 /* ==============================
-   CATEGORY LIST
+   HEADER
 ============================== */
 
-.explore-menu-list{
+.explore-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
 
-  display:flex;
-  gap:35px;
-  overflow-x:auto;
-  padding:20px 10px 30px;
+.explore-menu-header h1 {
+  margin: 0;
+  font-size: 38px;
+  font-weight: 900;
+  color: #111827;
+  line-height: 1.2;
+}
 
-  scroll-behavior:smooth;
-
+.explore-menu-header p {
+  margin: 8px 0 0;
+  font-size: 17px;
+  color: #374151;
 }
 
 
-.explore-menu-list::-webkit-scrollbar{
-  display:none;
+/* ==============================
+   ARROWS
+============================== */
+
+.explore-menu-arrows {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scroll-icon {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 32px;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-icon:hover:not(:disabled) {
+  color: tomato;
+  transform: scale(1.12);
+}
+
+.scroll-icon:disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
 }
 
 
-.explore-menu-list{
-  scrollbar-width:none;
-}
+/* ==============================
+   CATEGORY GRID
+============================== */
 
+.explore-menu-list {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  column-gap: 45px;
+  row-gap: 18px;
+
+  padding: 5px 10px 10px;
+
+  overflow: hidden;
+}
 
 
 /* ==============================
    CATEGORY ITEM
 ============================== */
 
+.explore-menu-list-item {
+  min-height: 120px;
 
-.explore-menu-list-item{
+  display: flex;
+  align-items: center;
 
-  min-width:140px;
+  gap: 20px;
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  padding: 8px 15px;
 
-  cursor:pointer;
+  cursor: pointer;
 
-  transition:all .4s ease;
-
-  position:relative;
-
-}
-
-
-
-.explore-menu-list-item:hover{
-
-  transform:translateY(-12px);
-
-}
-
-
-
-/* ==============================
-   IMAGE CIRCLE
-============================== */
-
-
-.explore-menu-list-item img{
-
-
-  width:110px;
-  height:110px;
-
-  border-radius:50%;
-
-  object-fit:cover;
-
-  border:4px solid transparent;
-
-  padding:4px;
-
-  background:white;
-
-
-  box-shadow:
-
-          0 10px 25px rgba(0,0,0,0.12);
-
+  border-radius: 18px;
 
   transition:
+          transform 0.3s ease,
+          background 0.3s ease;
+}
 
-          transform .5s ease,
-
-          box-shadow .5s ease,
-
-          border .3s ease;
-
-
+.explore-menu-list-item:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 99, 71, 0.05);
 }
 
 
-
-
 /* ==============================
-   HOVER IMAGE EFFECT
+   CATEGORY IMAGE
 ============================== */
 
+.category-image {
+  width: 95px;
+  height: 95px;
 
-.explore-menu-list-item:hover img{
+  flex-shrink: 0;
 
+  border-radius: 50%;
 
-  transform:
+  object-fit: cover;
 
-          scale(1.15)
+  border: 4px solid transparent;
 
-          rotate(8deg);
+  padding: 4px;
 
-
-
-  border:4px solid tomato;
-
-
+  background: white;
 
   box-shadow:
+          0 8px 22px rgba(0, 0, 0, 0.12);
 
-
-          0 20px 40px rgba(255,99,71,.35);
-
-
-
+  transition:
+          transform 0.4s ease,
+          box-shadow 0.4s ease,
+          border 0.3s ease;
 }
-
-
 
 
 /* ==============================
-   TEXT
+   IMAGE HOVER
 ============================== */
 
+.explore-menu-list-item:hover .category-image {
+  transform: scale(1.08) rotate(4deg);
 
-.explore-menu-list-item p{
+  border: 4px solid tomato;
 
-
-  margin-top:15px;
-
-
-  font-size:17px;
-
-
-  font-weight:700;
-
-
-  color:#64748b;
-
-
-  transition:.3s ease;
-
-
+  box-shadow:
+          0 14px 30px rgba(255, 99, 71, 0.3);
 }
 
 
+/* ==============================
+   CATEGORY TEXT
+============================== */
 
-.explore-menu-list-item:hover p{
+.explore-menu-list-item p {
+  margin: 0;
 
+  font-size: 18px;
 
-  color:tomato;
+  font-weight: 700;
 
+  color: #64748b;
 
-  transform:scale(1.1);
-
-
+  transition:
+          color 0.3s ease,
+          transform 0.3s ease;
 }
 
+.explore-menu-list-item:hover p {
+  color: tomato;
+  transform: translateX(3px);
+}
 
 
 /* ==============================
    ACTIVE CATEGORY
 ============================== */
 
-
-.explore-menu-list-item.active img{
-
-
-  border:5px solid tomato;
-
-
-  animation:pulse 1.8s infinite;
-
-
+.explore-menu-list-item.active {
+  background: rgba(255, 99, 71, 0.07);
 }
 
+.explore-menu-list-item.active .category-image {
+  border: 5px solid tomato;
 
-
-.explore-menu-list-item.text-active p{
-
-
-  color:tomato;
-
-  font-weight:800;
-
+  box-shadow:
+          0 0 0 5px rgba(255, 99, 71, 0.12),
+          0 12px 30px rgba(255, 99, 71, 0.3);
 }
 
-
-
+.explore-menu-list-item .text-active {
+  color: tomato;
+  font-weight: 800;
+}
 
 
 /* ==============================
-   ACTIVE PULSE
+   PAGE INDICATORS
 ============================== */
 
+.explore-page-indicator {
+  display: flex;
 
-@keyframes pulse{
+  justify-content: center;
 
+  align-items: center;
 
-  0%{
+  gap: 8px;
 
-    box-shadow:
-
-            0 0 0 0 rgba(255,99,71,.5);
-
-  }
-
-
-  70%{
-
-    box-shadow:
-
-            0 0 0 18px rgba(255,99,71,0);
-
-  }
-
-
-  100%{
-
-    box-shadow:
-
-            0 0 0 0 rgba(255,99,71,0);
-
-  }
-
-
+  margin-top: 8px;
 }
 
+.page-dot {
+  width: 8px;
+  height: 8px;
 
+  border-radius: 50%;
 
-/* ==============================
-   FLOATING EFFECT
-============================== */
+  background: #d1d5db;
 
+  cursor: pointer;
 
-.explore-menu-list-item img{
-
-  animation:
-
-          floatImage 3s ease-in-out infinite;
-
+  transition:
+          width 0.3s ease,
+          background 0.3s ease;
 }
 
-
-
-@keyframes floatImage{
-
-
-  0%,100%{
-
-    transform:translateY(0);
-
-  }
-
-
-  50%{
-
-    transform:translateY(-8px);
-
-  }
-
+.page-dot:hover {
+  background: #9ca3af;
 }
 
+.active-dot {
+  width: 24px;
 
+  border-radius: 10px;
 
-/* stop floating when hover */
-
-.explore-menu-list-item:hover img{
-
-
-  animation:none;
-
-
+  background: tomato;
 }
-
-
-
-
-
-/* ==============================
-   SCROLL BUTTON
-============================== */
-
-
-.scroll-icon{
-
-
-  font-size:28px;
-
-  color:#64748b;
-
-  cursor:pointer;
-
-
-  transition:.3s;
-
-
-}
-
-
-.scroll-icon:hover{
-
-
-  color:tomato;
-
-  transform:scale(1.3);
-
-
-}
-
 
 
 /* ==============================
    DIVIDER
 ============================== */
 
+.explore-menu hr {
+  border: none;
 
-.explore-menu hr{
+  height: 1px;
 
-
-  border:none;
-
-  height:2px;
-
-  margin-top:30px;
-
+  margin: 15px 0 0;
 
   background:
-
           linear-gradient(
-
                   90deg,
-
                   transparent,
-
                   #ddd,
-
                   transparent
-
           );
-
-
 }
 
 
+/* ==============================
+   TABLET
+============================== */
 
+@media (max-width: 900px) {
+
+  .explore-menu-header h1 {
+    font-size: 32px;
+  }
+
+  .explore-menu-header p {
+    font-size: 16px;
+  }
+
+  .explore-menu-list {
+    column-gap: 25px;
+    row-gap: 15px;
+  }
+
+  .explore-menu-list-item {
+    gap: 15px;
+    padding: 7px;
+  }
+
+  .category-image {
+    width: 85px;
+    height: 85px;
+  }
+
+  .explore-menu-list-item p {
+    font-size: 16px;
+  }
+
+}
 
 
 /* ==============================
    MOBILE
 ============================== */
 
+@media (max-width: 600px) {
 
-@media(max-width:768px){
-
-
-  .explore-menu h2{
-
-    font-size:28px;
-
+  .explore-menu {
+    padding: 15px 0 5px;
   }
 
-
-
-  .explore-menu-list{
-
-    gap:20px;
-
+  .explore-menu-header {
+    margin-bottom: 12px;
   }
 
-
-
-  .explore-menu-list-item{
-
-    min-width:110px;
-
+  .explore-menu-header h1 {
+    font-size: 26px;
   }
 
-
-
-  .explore-menu-list-item img{
-
-
-    width:80px;
-
-    height:80px;
-
-
+  .explore-menu-header p {
+    font-size: 14px;
+    margin-top: 5px;
   }
 
+  .explore-menu-arrows {
+    gap: 3px;
+  }
+
+  .scroll-icon {
+    font-size: 27px;
+  }
+
+  .explore-menu-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 12px;
+    row-gap: 10px;
+
+    padding: 3px;
+  }
+
+  .explore-menu-list-item {
+    min-height: 85px;
+
+    gap: 8px;
+
+    padding: 6px;
+
+    border-radius: 12px;
+  }
+
+  .category-image {
+    width: 60px;
+    height: 60px;
+
+    border-width: 3px;
+    padding: 3px;
+  }
+
+  .explore-menu-list-item p {
+    font-size: 13px;
+  }
+
+  .explore-page-indicator {
+    margin-top: 6px;
+  }
 
 }
