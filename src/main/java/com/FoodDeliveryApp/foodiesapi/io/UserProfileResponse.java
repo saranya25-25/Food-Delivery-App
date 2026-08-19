@@ -9,9 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRequest {
+public class UserProfileResponse {
+    private String id;
     private String name;
     private String email;
-    private String password;
+    private String phoneNumber;
     private String address;
+    private String city;
+    private String state;
+    private String zip;
 }

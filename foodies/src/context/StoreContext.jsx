@@ -1,66 +1,120 @@
 import { createContext, useEffect, useState } from "react";
 import { fetchFoodList } from "../service/foodService";
-import { addToCart, getCartData, removeQtyFromCart } from "../service/cartService";
+import {
+  addToCart,
+  getCartData,
+  removeQtyFromCart
+} from "../service/cartService";
 
 export const StoreContext = createContext(null);
 
-export const StoreContextProvider = (props) => {
+export const StoreContextProvider = ({ children }) => {
   const [foodList, setFoodList] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
   const increaseQty = async (foodId) => {
     if (!token) {
-      alert("Please login first");
-      return;
+      return false;
     }
 
-    setQuantities((prev) => ({
-      ...prev,
-      [foodId]: (prev[foodId] || 0) + 1,
-    }));
+    try {
+      await addToCart(foodId, token);
 
-    await addToCart(foodId, token);
+      setQuantities((prev) => ({
+        ...prev,
+        [foodId]: (prev[foodId] || 0) + 1
+      }));
+
+      return true;
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
+      return false;
+    }
   };
 
   const decreaseQty = async (foodId) => {
-    if (!token) return;
+    if (!token || !quantities[foodId]) {
+      return false;
+    }
 
-    setQuantities((prev) => ({
-      ...prev,
-      [foodId]: prev[foodId] > 0 ? prev[foodId] - 1 : 0,
-    }));
+    try {
+      await removeQtyFromCart(foodId, token);
 
-    await removeQtyFromCart(foodId, token);
+      setQuantities((prev) => {
+        const updated = { ...prev };
+        const currentQty = updated[foodId] || 0;
+
+        if (currentQty > 1) {
+          updated[foodId] = currentQty - 1;
+        } else {
+          delete updated[foodId];
+        }
+
+        return updated;
+      });
+
+      return true;
+    } catch (error) {
+      console.error("Failed to decrease item quantity:", error);
+      return false;
+    }
   };
 
-  const removeFromCart = (foodId) => {
-    setQuantities((prev) => {
-      const updated = { ...prev };
-      delete updated[foodId];
-      return updated;
-    });
+  const removeFromCart = async (foodId) => {
+    if (!token || !quantities[foodId]) {
+      return false;
+    }
+
+    try {
+      const quantity = quantities[foodId];
+
+      for (let i = 0; i < quantity; i++) {
+        await removeQtyFromCart(foodId, token);
+      }
+
+      setQuantities((prev) => {
+        const updated = { ...prev };
+        delete updated[foodId];
+        return updated;
+      });
+
+      return true;
+    } catch (error) {
+      console.error("Failed to remove item from cart:", error);
+      return false;
+    }
   };
 
   const loadCartData = async (userToken) => {
-    if (!userToken) return;
+    if (!userToken) {
+      setQuantities({});
+      return;
+    }
 
-    const items = await getCartData(userToken);
-    if (items) {
-      setQuantities(items);
+    try {
+      const items = await getCartData(userToken);
+      setQuantities(items || {});
+    } catch (error) {
+      console.error("Failed to load cart:", error);
+      setQuantities({});
     }
   };
 
   useEffect(() => {
     const loadData = async () => {
-      const foods = await fetchFoodList();
-      setFoodList(foods || []);
+      try {
+        const foods = await fetchFoodList();
+        setFoodList(foods || []);
 
-      const savedToken = localStorage.getItem("token");
+        const savedToken = localStorage.getItem("token");
 
-      if (savedToken) {
-        setToken(savedToken);
-        await loadCartData(savedToken);
+        if (savedToken) {
+          setToken(savedToken);
+          await loadCartData(savedToken);
+        }
+      } catch (error) {
+        console.error("Failed to load application data:", error);
       }
     };
 
@@ -76,12 +130,12 @@ export const StoreContextProvider = (props) => {
     token,
     setToken,
     setQuantities,
-    loadCartData,
+    loadCartData
   };
 
   return (
       <StoreContext.Provider value={contextValue}>
-        {props.children}
+        {children}
       </StoreContext.Provider>
   );
 };

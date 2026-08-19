@@ -13,8 +13,8 @@ const FoodDetails = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
+  const { increaseQty, token } = useContext(StoreContext);
 
-  const { increaseQty } = useContext(StoreContext);
 
 
   const [data, setData] = useState(null);
@@ -43,13 +43,20 @@ const FoodDetails = () => {
     loadFoodDetails();
 
   }, [id]);
+  const addToCart = async () => {
+    if (!token) {
+      toast.warning("Please login to add items to your cart.");
+      navigate("/login");
+      return;
+    }
 
-  const addToCart = () => {
+    const success = await increaseQty(data.id);
 
-    increaseQty(data.id);
-
-    toast.success("Added to cart 🛒");
-
+    if (success) {
+      toast.success("Added to cart 🛒");
+    } else {
+      toast.error("Unable to add item to cart.");
+    }
   };
   if(!data){
 

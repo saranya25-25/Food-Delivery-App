@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "users")
 @Builder
+@Document(collection = "users")
 public class UserEntity {
     @Id
     private String id;
@@ -19,4 +20,5 @@ public class UserEntity {
     @Indexed(unique = true)
     private String email;
     private String password;
+    private String address;
 }

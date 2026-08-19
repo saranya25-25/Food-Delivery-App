@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Contact.css";
 
 const Contact = () => {
@@ -8,126 +8,267 @@ const Contact = () => {
     email: "",
     message: "",
   });
+
   const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("");
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
-    setData((prev) => ({ ...prev, [name]: value }));
+
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
+
     setSending(true);
-    // NOTE: wire this up to your actual contact-form service/endpoint.
-    // Simulated delay here so the success animation has something to
-    // transition from — replace with the real request + its result.
-    setTimeout(() => {
+    setStatus("");
+
+    try {
+      const response = await fetch(
+          "https://formspree.io/f/xbgrqgwy",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+      );
+
+      if (response.ok) {
+        setStatus("success");
+
+        setData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Form submission failed:", error);
+      setStatus("error");
+    } finally {
       setSending(false);
-      setSent(true);
-      setData({ firstName: "", lastName: "", email: "", message: "" });
-    }, 900);
+    }
   };
 
   return (
-    <section className="py-5">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-8">
-            <div className="contact-form p-5 shadow-sm bg-white">
-              <h2 className="text-center mb-4 contact-heading">
-                Get in Touch
-              </h2>
+      <section className="contact-section">
+        <div className="contact-overlay"></div>
 
-              {sent ? (
-                <div className="contact-success text-center py-4">
-                  <i className="bi bi-check-circle-fill success-icon"></i>
-                  <h4 className="mt-3">Message sent!</h4>
-                  <p className="text-muted">
-                    Thanks for reaching out — we'll get back to you soon.
-                  </p>
-                  <button
-                    className="btn btn-outline-primary mt-2"
-                    onClick={() => setSent(false)}
-                  >
-                    Send another message
-                  </button>
+        <div className="container contact-container">
+          <div className="contact-content">
+
+            {/* Left Side */}
+            <div className="contact-info">
+                        <span className="contact-badge">
+                            <i className="bi bi-chat-dots-fill"></i>
+                            Get in Touch
+                        </span>
+
+              <h1>
+                Let's talk about
+                <span> delicious food!</span>
+              </h1>
+
+              <p>
+                Have a question, suggestion, or feedback?
+                We'd love to hear from you. Send us a message
+                and our team will get back to you soon.
+              </p>
+
+              <div className="contact-details">
+
+                <div className="contact-detail">
+                  <div className="detail-icon">
+                    <i className="bi bi-envelope-fill"></i>
+                  </div>
+
+                  <div>
+                    <small>Email</small>
+                    <p>We'll reply to your email</p>
+                  </div>
                 </div>
+
+                <div className="contact-detail">
+                  <div className="detail-icon">
+                    <i className="bi bi-clock-fill"></i>
+                  </div>
+
+                  <div>
+                    <small>Response Time</small>
+                    <p>Usually within 24 hours</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Contact Card */}
+            <div className="contact-card">
+
+              {status === "success" ? (
+                  <div className="contact-success">
+
+                    <div className="success-circle">
+                      <i className="bi bi-check-lg"></i>
+                    </div>
+
+                    <h2>Message Sent!</h2>
+
+                    <p>
+                      Thanks for reaching out. We've received
+                      your message and will get back to you soon.
+                    </p>
+
+                    <button
+                        type="button"
+                        className="send-another-btn"
+                        onClick={() => setStatus("")}
+                    >
+                      Send Another Message
+                    </button>
+
+                  </div>
               ) : (
-                <form onSubmit={onSubmitHandler}>
-                  <div className="row g-3">
-                    <div className="col-md-6 field-in" style={{ animationDelay: "0.05s" }}>
-                      <input
-                        type="text"
-                        className="form-control custom-input"
-                        placeholder="First Name"
-                        name="firstName"
-                        value={data.firstName}
-                        onChange={onChangeHandler}
-                        required
-                      />
+                  <>
+                    <div className="form-header">
+                      <h2>Send us a message</h2>
+
+                      <p>
+                        Fill in the details below and we'll
+                        get back to you.
+                      </p>
                     </div>
-                    <div className="col-md-6 field-in" style={{ animationDelay: "0.1s" }}>
-                      <input
-                        type="text"
-                        className="form-control custom-input"
-                        placeholder="Last Name"
-                        name="lastName"
-                        value={data.lastName}
-                        onChange={onChangeHandler}
-                        required
-                      />
-                    </div>
-                    <div className="col-12 field-in" style={{ animationDelay: "0.15s" }}>
-                      <input
-                        type="email"
-                        className="form-control custom-input"
-                        placeholder="Email Address"
-                        name="email"
-                        value={data.email}
-                        onChange={onChangeHandler}
-                        required
-                      />
-                    </div>
-                    <div className="col-12 field-in" style={{ animationDelay: "0.2s" }}>
-                      <textarea
-                        className="form-control custom-input"
-                        rows="5"
-                        placeholder="Your Message"
-                        name="message"
-                        value={data.message}
-                        onChange={onChangeHandler}
-                        required
-                      ></textarea>
-                    </div>
-                    <div className="col-12 field-in" style={{ animationDelay: "0.25s" }}>
+
+                    <form onSubmit={onSubmitHandler}>
+
+                      <div className="form-row">
+
+                        <div className="form-group">
+                          <label htmlFor="firstName">
+                            First Name
+                          </label>
+
+                          <div className="input-wrapper">
+                            <i className="bi bi-person"></i>
+
+                            <input
+                                id="firstName"
+                                type="text"
+                                name="firstName"
+                                placeholder="Enter your first name"
+                                value={data.firstName}
+                                onChange={onChangeHandler}
+                                required
+                            />
+                          </div>
+                        </div>
+
+                        <div className="form-group">
+                          <label htmlFor="lastName">
+                            Last Name
+                          </label>
+
+                          <div className="input-wrapper">
+                            <i className="bi bi-person"></i>
+
+                            <input
+                                id="lastName"
+                                type="text"
+                                name="lastName"
+                                placeholder="Enter your last name"
+                                value={data.lastName}
+                                onChange={onChangeHandler}
+                                required
+                            />
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="email">
+                          Email Address
+                        </label>
+
+                        <div className="input-wrapper">
+                          <i className="bi bi-envelope"></i>
+
+                          <input
+                              id="email"
+                              type="email"
+                              name="email"
+                              placeholder="you@example.com"
+                              value={data.email}
+                              onChange={onChangeHandler}
+                              required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="message">
+                          Your Message
+                        </label>
+
+                        <div className="input-wrapper textarea-wrapper">
+                          <i className="bi bi-chat-left-text"></i>
+
+                          <textarea
+                              id="message"
+                              name="message"
+                              rows="5"
+                              placeholder="Tell us how we can help..."
+                              value={data.message}
+                              onChange={onChangeHandler}
+                              required
+                          ></textarea>
+                        </div>
+                      </div>
+
+                      {status === "error" && (
+                          <div className="error-message">
+                            <i className="bi bi-exclamation-circle-fill"></i>
+                            Something went wrong. Please try
+                            again.
+                          </div>
+                      )}
+
                       <button
-                        className="btn btn-primary w-100 send-btn"
-                        type="submit"
-                        disabled={sending}
+                          type="submit"
+                          className="send-btn"
+                          disabled={sending}
                       >
                         {sending ? (
-                          <>
-                            <span
-                              className="spinner-border spinner-border-sm me-2"
-                              role="status"
-                              aria-hidden="true"
-                            ></span>
-                            Sending...
-                          </>
+                            <>
+                              <span className="spinner"></span>
+                              Sending Message...
+                            </>
                         ) : (
-                          "Send Message"
+                            <>
+                              Send Message
+                              <i className="bi bi-send-fill"></i>
+                            </>
                         )}
                       </button>
-                    </div>
-                  </div>
-                </form>
+
+                    </form>
+                  </>
               )}
+
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 };
 

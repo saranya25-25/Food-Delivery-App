@@ -11,10 +11,26 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("/api")
 public class UserController {
+
     private final UserService userService;
+
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponse register(@RequestBody UserRequest request) {
+    public UserResponse register(
+            @RequestBody UserRequest request
+    ) {
         return userService.registerUser(request);
+    }
+
+    @GetMapping("/profile")
+    public UserResponse getProfile() {
+        return userService.getProfile();
+    }
+
+    @PutMapping("/profile")
+    public UserResponse updateProfile(
+            @RequestBody UserRequest request
+    ) {
+        return userService.updateProfile(request);
     }
 }
