@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = 'http://localhost:8080/api/foods';
+const API_URL = 'https://foodies-backend-z67f.onrender.com/api/foods';
 
 export const fetchFoodList = async () => {
     try {
@@ -20,5 +20,5 @@ export const fetchFoodDetails = async (id) => {
         console.log('Error fetching food details:', error);
         throw error;
     }
-    
+
 }

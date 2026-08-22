@@ -29,7 +29,13 @@ import java.util.List;
 public class SecurityConfig {
 
     private final AppUserDetailsService userDetailsService;
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+
+    // =========================================================
+    // SECURITY FILTER CHAIN
+    // =========================================================
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -37,16 +43,31 @@ public class SecurityConfig {
     ) throws Exception {
 
         http
+
+                // =================================================
                 // CORS
+                // =================================================
+
                 .cors(Customizer.withDefaults())
 
-                // Disable CSRF because we are using JWT
+
+                // =================================================
+                // CSRF
+                // =================================================
+
                 .csrf(AbstractHttpConfigurer::disable)
 
-                // Authorization rules
+
+                // =================================================
+                // AUTHORIZATION
+                // =================================================
+
                 .authorizeHttpRequests(auth -> auth
 
-                        // Public endpoints
+                        // -------------------------------
+                        // PUBLIC ENDPOINTS
+                        // -------------------------------
+
                         .requestMatchers(
                                 "/api/register",
                                 "/api/login",
@@ -55,38 +76,55 @@ public class SecurityConfig {
                                 "/api/orders/status/**"
                         ).permitAll()
 
-                        // Everything else requires authentication
+
+                        // -------------------------------
+                        // ALL OTHER ENDPOINTS
+                        // REQUIRE JWT
+                        // -------------------------------
+
                         .anyRequest().authenticated()
                 )
 
-                // Stateless JWT authentication
+
+                // =================================================
+                // SESSION MANAGEMENT
+                // =================================================
+
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS
                         )
                 )
 
-                // JWT filter
+
+                // =================================================
+                // JWT FILTER
+                // =================================================
+
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
                 );
 
+
         return http.build();
     }
 
-    // ==============================
+
+    // =========================================================
     // PASSWORD ENCODER
-    // ==============================
+    // =========================================================
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 
-    // ==============================
+
+    // =========================================================
     // CORS CONFIGURATION
-    // ==============================
+    // =========================================================
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -94,19 +132,61 @@ public class SecurityConfig {
         CorsConfiguration config =
                 new CorsConfiguration();
 
+
+        // =====================================================
+        // ALLOWED FRONTENDS
+        // =====================================================
+
         config.setAllowedOriginPatterns(
-                List.of("http://localhost:*")
+                List.of(
+
+                        // Local development
+                        "http://localhost:*",
+
+                        // Customer frontend
+                        "https://darling-hummingbird-2ed960.netlify.app",
+
+                        // Admin panel
+                        "https://aquamarine-basbousa-b42ac9.netlify.app"
+                )
         );
 
+
+        // =====================================================
+        // ALLOWED HTTP METHODS
+        // =====================================================
+
         config.setAllowedMethods(
-                List.of("*")
+                List.of(
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE",
+                        "PATCH",
+                        "OPTIONS"
+                )
         );
+
+
+        // =====================================================
+        // ALLOWED HEADERS
+        // =====================================================
 
         config.setAllowedHeaders(
                 List.of("*")
         );
 
+
+        // =====================================================
+        // CREDENTIALS
+        // =====================================================
+
         config.setAllowCredentials(true);
+
+
+        // =====================================================
+        // REGISTER CORS CONFIGURATION
+        // =====================================================
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
@@ -116,12 +196,14 @@ public class SecurityConfig {
                 config
         );
 
+
         return source;
     }
 
-    // ==============================
+
+    // =========================================================
     // AUTHENTICATION MANAGER
-    // ==============================
+    // =========================================================
 
     @Bean
     public AuthenticationManager authenticationManager() {
@@ -129,14 +211,19 @@ public class SecurityConfig {
         DaoAuthenticationProvider authProvider =
                 new DaoAuthenticationProvider();
 
+
         authProvider.setUserDetailsService(
                 userDetailsService
         );
+
 
         authProvider.setPasswordEncoder(
                 passwordEncoder()
         );
 
-        return new ProviderManager(authProvider);
+
+        return new ProviderManager(
+                authProvider
+        );
     }
 }

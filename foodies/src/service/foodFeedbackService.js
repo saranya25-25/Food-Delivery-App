@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/food-feedback";
+const API_URL = "https://foodies-backend-z67f.onrender.com/api/food-feedback";
 
 // SAVE / UPDATE FEEDBACK
 export const saveFoodFeedback = async (feedback, token) => {
