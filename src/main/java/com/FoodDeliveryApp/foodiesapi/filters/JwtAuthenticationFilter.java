@@ -1,6 +1,7 @@
 package com.FoodDeliveryApp.foodiesapi.filters;
 
 import com.FoodDeliveryApp.foodiesapi.util.JwtUtil;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,8 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import io.jsonwebtoken.ExpiredJwtException;
-
 import java.io.IOException;
 
 @Component
@@ -23,9 +22,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-
     private final UserDetailsService userDetailsService;
-
 
     @Override
     protected void doFilterInternal(
@@ -34,94 +31,68 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String authHeader =
-                request.getHeader("Authorization");
+        String authHeader = request.getHeader("Authorization");
 
         String token = null;
         String username = null;
 
-
-        // ==========================================
+        // =====================================================
         // CHECK AUTHORIZATION HEADER
-        // ==========================================
+        // =====================================================
 
-        if (authHeader != null &&
-                authHeader.startsWith("Bearer ")) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
-            token =
-                    authHeader.substring(7);
+            token = authHeader.substring(7);
 
             try {
 
-                username =
-                        jwtUtil.extractUsername(token);
+                username = jwtUtil.extractUsername(token);
 
             } catch (ExpiredJwtException e) {
 
-                System.out.println(
-                        "JWT token expired"
-                );
+                System.out.println("JWT token expired");
 
-                response.setStatus(
-                        HttpServletResponse.SC_UNAUTHORIZED
-                );
+                // IMPORTANT:
+                // Do NOT stop the request here.
+                // Public endpoints like /api/foods/** must
+                // still be accessible.
 
-                response.setContentType(
-                        "application/json"
-                );
-
-                response.getWriter().write(
-                        "{\"message\":\"JWT token expired\"}"
-                );
-
+                filterChain.doFilter(request, response);
                 return;
 
             } catch (Exception e) {
 
                 System.out.println(
-                        "Invalid JWT token: "
-                                + e.getMessage()
+                        "Invalid JWT token: " + e.getMessage()
                 );
 
-                response.setStatus(
-                        HttpServletResponse.SC_UNAUTHORIZED
-                );
+                // IMPORTANT:
+                // Continue request instead of returning 401 here.
+                // Spring Security will decide whether the endpoint
+                // actually requires authentication.
 
-                response.setContentType(
-                        "application/json"
-                );
-
-                response.getWriter().write(
-                        "{\"message\":\"Invalid JWT token\"}"
-                );
-
+                filterChain.doFilter(request, response);
                 return;
             }
         }
 
-
-        // ==========================================
+        // =====================================================
         // AUTHENTICATE USER
-        // ==========================================
+        // =====================================================
 
         if (username != null &&
                 SecurityContextHolder
                         .getContext()
                         .getAuthentication() == null) {
 
-            UserDetails userDetails =
-                    userDetailsService
-                            .loadUserByUsername(username);
-
             try {
 
-                if (jwtUtil.validateToken(
-                        token,
-                        userDetails
-                )) {
+                UserDetails userDetails =
+                        userDetailsService.loadUserByUsername(username);
 
-                    UsernamePasswordAuthenticationToken
-                            authentication =
+                if (jwtUtil.validateToken(token, userDetails)) {
+
+                    UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
                                     userDetails,
                                     null,
@@ -135,33 +106,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder
                             .getContext()
-                            .setAuthentication(
-                                    authentication
-                            );
+                            .setAuthentication(authentication);
                 }
 
             } catch (ExpiredJwtException e) {
 
-                response.setStatus(
-                        HttpServletResponse.SC_UNAUTHORIZED
-                );
+                System.out.println("JWT token expired");
 
-                return;
+                // Don't block public APIs.
+                SecurityContextHolder.clearContext();
 
             } catch (Exception e) {
 
-                response.setStatus(
-                        HttpServletResponse.SC_UNAUTHORIZED
+                System.out.println(
+                        "JWT authentication failed: "
+                                + e.getMessage()
                 );
 
-                return;
+                SecurityContextHolder.clearContext();
             }
         }
 
+        // =====================================================
+        // CONTINUE REQUEST
+        // =====================================================
 
-        filterChain.doFilter(
-                request,
-                response
-        );
+        filterChain.doFilter(request, response);
     }
 }
