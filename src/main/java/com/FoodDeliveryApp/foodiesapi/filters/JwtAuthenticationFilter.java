@@ -24,6 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -31,50 +32,88 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
+
+        // =====================================================
+        // PUBLIC FOOD API
+        // =====================================================
+
+        String path = request.getRequestURI();
+
+        if (path.equals("/api/foods") ||
+                path.startsWith("/api/foods/")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
+        // =====================================================
+        // GET AUTHORIZATION HEADER
+        // =====================================================
+
+        String authHeader =
+                request.getHeader("Authorization");
 
         String token = null;
         String username = null;
 
+
         // =====================================================
-        // CHECK AUTHORIZATION HEADER
+        // CHECK BEARER TOKEN
         // =====================================================
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        if (authHeader != null &&
+                authHeader.startsWith("Bearer ")) {
 
             token = authHeader.substring(7);
 
             try {
 
-                username = jwtUtil.extractUsername(token);
+                username =
+                        jwtUtil.extractUsername(token);
 
             } catch (ExpiredJwtException e) {
 
-                System.out.println("JWT token expired");
+                System.out.println(
+                        "JWT token expired"
+                );
 
-                // IMPORTANT:
-                // Do NOT stop the request here.
-                // Public endpoints like /api/foods/** must
-                // still be accessible.
+                // Clear authentication
+                SecurityContextHolder
+                        .clearContext();
 
-                filterChain.doFilter(request, response);
+                // Continue request.
+                // Spring Security will decide whether
+                // authentication is required.
+
+                filterChain.doFilter(
+                        request,
+                        response
+                );
+
                 return;
 
             } catch (Exception e) {
 
                 System.out.println(
-                        "Invalid JWT token: " + e.getMessage()
+                        "Invalid JWT token: "
+                                + e.getMessage()
                 );
 
-                // IMPORTANT:
-                // Continue request instead of returning 401 here.
-                // Spring Security will decide whether the endpoint
-                // actually requires authentication.
+                SecurityContextHolder
+                        .clearContext();
 
-                filterChain.doFilter(request, response);
+                // Continue request.
+
+                filterChain.doFilter(
+                        request,
+                        response
+                );
+
                 return;
             }
         }
+
 
         // =====================================================
         // AUTHENTICATE USER
@@ -88,33 +127,51 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
 
                 UserDetails userDetails =
-                        userDetailsService.loadUserByUsername(username);
+                        userDetailsService
+                                .loadUserByUsername(
+                                        username
+                                );
 
-                if (jwtUtil.validateToken(token, userDetails)) {
 
-                    UsernamePasswordAuthenticationToken authentication =
+                // =================================================
+                // VALIDATE TOKEN
+                // =================================================
+
+                if (jwtUtil.validateToken(
+                        token,
+                        userDetails
+                )) {
+
+                    UsernamePasswordAuthenticationToken
+                            authentication =
                             new UsernamePasswordAuthenticationToken(
                                     userDetails,
                                     null,
                                     userDetails.getAuthorities()
                             );
 
+
                     authentication.setDetails(
                             new WebAuthenticationDetailsSource()
                                     .buildDetails(request)
                     );
 
+
                     SecurityContextHolder
                             .getContext()
-                            .setAuthentication(authentication);
+                            .setAuthentication(
+                                    authentication
+                            );
                 }
 
             } catch (ExpiredJwtException e) {
 
-                System.out.println("JWT token expired");
+                System.out.println(
+                        "JWT token expired"
+                );
 
-                // Don't block public APIs.
-                SecurityContextHolder.clearContext();
+                SecurityContextHolder
+                        .clearContext();
 
             } catch (Exception e) {
 
@@ -123,14 +180,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                 + e.getMessage()
                 );
 
-                SecurityContextHolder.clearContext();
+                SecurityContextHolder
+                        .clearContext();
             }
         }
+
 
         // =====================================================
         // CONTINUE REQUEST
         // =====================================================
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(
+                request,
+                response
+        );
     }
 }
