@@ -1,0 +1,182 @@
+/* ==========================================================
+   FAVORITE BUTTON - PREMIUM
+========================================================== */
+
+.food-favorite-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+
+    width: 52px;
+    height: 52px;
+
+    border: 3px solid #ff3b5c;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    z-index: 20;
+
+    box-shadow:
+            0 6px 18px rgba(255, 59, 92, 0.25);
+
+    transition:
+            transform 0.25s ease,
+            background 0.25s ease,
+            box-shadow 0.25s ease;
+}
+
+
+/* HEART */
+
+.food-favorite-btn i {
+    font-size: 25px;
+
+    color: #ff3b5c;
+
+    line-height: 1;
+
+    transition:
+            transform 0.25s ease,
+            color 0.25s ease;
+}
+
+
+/* HOVER */
+
+.food-favorite-btn:hover {
+    transform: scale(1.12);
+
+    background: #fff5f7;
+
+    box-shadow:
+            0 8px 25px rgba(255, 59, 92, 0.4);
+}
+
+.food-favorite-btn:hover i {
+    transform: scale(1.15);
+}
+
+
+/* ==========================================================
+   ACTIVE FAVORITE
+========================================================== */
+
+.food-favorite-btn.favorite-active {
+    background: #ff3b5c;
+
+    border-color: #ff3b5c;
+
+    box-shadow:
+            0 8px 25px rgba(255, 59, 92, 0.45);
+
+    animation: favoritePop 0.3s ease;
+}
+
+
+.food-favorite-btn.favorite-active i {
+    color: white;
+
+    transform: scale(1.1);
+}
+
+
+/* ==========================================================
+   FAVORITE POP ANIMATION
+========================================================== */
+
+@keyframes favoritePop {
+
+    0% {
+        transform: scale(0.75);
+    }
+
+    60% {
+        transform: scale(1.18);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+
+/* ==========================================================
+   SMALL HEART PULSE
+========================================================== */
+
+.food-favorite-btn.favorite-active::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -5px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255, 59, 92, 0.35);
+
+    animation: favoriteRing 0.5s ease-out;
+
+}
+
+
+@keyframes favoriteRing {
+
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.35);
+        opacity: 0;
+    }
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 600px) {
+
+    .food-favorite-btn {
+
+        width: 48px;
+        height: 48px;
+
+        top: 12px;
+        right: 12px;
+
+    }
+
+    .food-favorite-btn i {
+
+        font-size: 23px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   ACCESSIBILITY
+========================================================== */
+
+.food-favorite-btn:focus-visible {
+
+    outline: 3px solid rgba(255, 59, 92, 0.35);
+
+    outline-offset: 3px;
+
+}

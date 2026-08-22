@@ -1,0 +1,19 @@
+package com.FoodDeliveryApp.foodiesapi.io;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class FoodFeedbackResponse {
+
+    private String foodId;
+
+    private int rating;
+
+    private boolean favorite;
+}

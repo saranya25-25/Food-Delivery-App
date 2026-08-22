@@ -1,7 +1,19 @@
 import { useContext } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { ToastContainer } from "react-toastify";
+import {
+    Route,
+    Routes,
+    useLocation
+} from "react-router-dom";
+
+import {
+    AnimatePresence,
+    motion
+} from "framer-motion";
+
+import {
+    ToastContainer
+} from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 
 import Menubar from "./components/Menubar/Menubar";
@@ -16,16 +28,33 @@ import Cart from "./pages/Cart/Cart";
 import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import Profile from "./pages/Profile/Profile";
+import Favorites from "./components/Favorites/Favorites";
 
 import { StoreContext } from "./context/StoreContext";
+
+
+// =========================================================
+// ANIMATED PAGE
+// =========================================================
 
 const AnimatedPage = ({ children }) => {
     return (
         <motion.div
-            style={{ width: "100%" }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            style={{
+                width: "100%"
+            }}
+            initial={{
+                opacity: 0,
+                y: 20
+            }}
+            animate={{
+                opacity: 1,
+                y: 0
+            }}
+            exit={{
+                opacity: 0,
+                y: -20
+            }}
             transition={{
                 duration: 0.35,
                 ease: "easeInOut"
@@ -36,13 +65,38 @@ const AnimatedPage = ({ children }) => {
     );
 };
 
+
+// =========================================================
+// APP
+// =========================================================
+
 const App = () => {
-    const { token } = useContext(StoreContext);
-    const location = useLocation();
+
+    const { token } =
+        useContext(StoreContext);
+
+    const location =
+        useLocation();
+
+
+    const isAuthPage =
+        ["/login", "/register"]
+            .includes(location.pathname);
+
 
     return (
         <div className="app-container">
-            {!["/login", "/register"].includes(location.pathname) && <Menubar />}
+
+            {/* =================================================
+                MENUBAR
+            ================================================= */}
+
+            {!isAuthPage && <Menubar />}
+
+
+            {/* =================================================
+                TOAST
+            ================================================= */}
 
             <ToastContainer
                 position="top-right"
@@ -54,8 +108,22 @@ const App = () => {
                 theme="colored"
             />
 
+
+            {/* =================================================
+                ROUTES
+            ================================================= */}
+
             <AnimatePresence mode="wait">
-                <Routes location={location} key={location.pathname}>
+
+                <Routes
+                    location={location}
+                    key={location.pathname}
+                >
+
+                    {/* =================================================
+                        HOME
+                    ================================================= */}
+
                     <Route
                         path="/"
                         element={
@@ -64,6 +132,11 @@ const App = () => {
                             </AnimatedPage>
                         }
                     />
+
+
+                    {/* =================================================
+                        CONTACT
+                    ================================================= */}
 
                     <Route
                         path="/contact"
@@ -80,6 +153,11 @@ const App = () => {
                         }
                     />
 
+
+                    {/* =================================================
+                        EXPLORE
+                    ================================================= */}
+
                     <Route
                         path="/explore"
                         element={
@@ -89,6 +167,11 @@ const App = () => {
                         }
                     />
 
+
+                    {/* =================================================
+                        FOOD DETAILS
+                    ================================================= */}
+
                     <Route
                         path="/food/:id"
                         element={
@@ -97,6 +180,11 @@ const App = () => {
                             </AnimatedPage>
                         }
                     />
+
+
+                    {/* =================================================
+                        CART
+                    ================================================= */}
 
                     <Route
                         path="/cart"
@@ -113,6 +201,11 @@ const App = () => {
                         }
                     />
 
+
+                    {/* =================================================
+                        PLACE ORDER
+                    ================================================= */}
+
                     <Route
                         path="/order"
                         element={
@@ -128,35 +221,10 @@ const App = () => {
                         }
                     />
 
-                    <Route
-                        path="/login"
-                        element={
-                            token ? (
-                                <AnimatedPage>
-                                    <Home />
-                                </AnimatedPage>
-                            ) : (
-                                <AnimatedPage>
-                                    <Login />
-                                </AnimatedPage>
-                            )
-                        }
-                    />
 
-                    <Route
-                        path="/register"
-                        element={
-                            token ? (
-                                <AnimatedPage>
-                                    <Home />
-                                </AnimatedPage>
-                            ) : (
-                                <AnimatedPage>
-                                    <Register />
-                                </AnimatedPage>
-                            )
-                        }
-                    />
+                    {/* =================================================
+                        MY ORDERS
+                    ================================================= */}
 
                     <Route
                         path="/myorders"
@@ -173,6 +241,11 @@ const App = () => {
                         }
                     />
 
+
+                    {/* =================================================
+                        PROFILE
+                    ================================================= */}
+
                     <Route
                         path="/profile"
                         element={
@@ -187,10 +260,74 @@ const App = () => {
                             )
                         }
                     />
+
+
+                    {/* =================================================
+                        FAVORITES
+                    ================================================= */}
+
+                    <Route
+                        path="/favorites"
+                        element={
+                            token ? (
+                                <AnimatedPage>
+                                    <Favorites />
+                                </AnimatedPage>
+                            ) : (
+                                <AnimatedPage>
+                                    <Login />
+                                </AnimatedPage>
+                            )
+                        }
+                    />
+
+
+                    {/* =================================================
+                        LOGIN
+                    ================================================= */}
+
+                    <Route
+                        path="/login"
+                        element={
+                            token ? (
+                                <AnimatedPage>
+                                    <Home />
+                                </AnimatedPage>
+                            ) : (
+                                <AnimatedPage>
+                                    <Login />
+                                </AnimatedPage>
+                            )
+                        }
+                    />
+
+
+                    {/* =================================================
+                        REGISTER
+                    ================================================= */}
+
+                    <Route
+                        path="/register"
+                        element={
+                            token ? (
+                                <AnimatedPage>
+                                    <Home />
+                                </AnimatedPage>
+                            ) : (
+                                <AnimatedPage>
+                                    <Register />
+                                </AnimatedPage>
+                            )
+                        }
+                    />
+
                 </Routes>
+
             </AnimatePresence>
+
         </div>
     );
 };
+
 
 export default App;

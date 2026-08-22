@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./Menubar.css";
 import { assets } from "../../assets/assets";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
+import { fetchProfile } from "../../service/profileService";
 
 const Menubar = () => {
   const {
@@ -15,14 +16,105 @@ const Menubar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [cartAnimation, setCartAnimation] = useState(false);
+  const dropdownRef = useRef(null);
 
-  const cartCount = Object.values(quantities)
+  const [cartAnimation, setCartAnimation] = useState(false);
+  const [profileImage, setProfileImage] = useState("");
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  // ==========================================
+  // CART COUNT
+  // ==========================================
+
+  const cartCount = Object.values(quantities || {})
       .filter((qty) => qty > 0)
       .length;
 
+  // ==========================================
+  // LOAD PROFILE
+  // ==========================================
+
   useEffect(() => {
-    if (cartCount === 0) return;
+    const loadProfile = async () => {
+      if (!token) {
+        setProfileImage("");
+        return;
+      }
+
+      try {
+        const profile = await fetchProfile(token);
+
+        if (profile?.profileImageUrl) {
+          const imageUrl =
+              `${profile.profileImageUrl}${
+                  profile.profileImageUrl.includes("?")
+                      ? "&"
+                      : "?"
+              }t=${Date.now()}`;
+
+          setProfileImage(imageUrl);
+        } else {
+          setProfileImage("");
+        }
+      } catch (error) {
+        console.error(
+            "Unable to load profile:",
+            error
+        );
+
+        setProfileImage("");
+      }
+    };
+
+    loadProfile();
+  }, [token]);
+
+  // ==========================================
+  // CLOSE DROPDOWN OUTSIDE CLICK
+  // ==========================================
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target)
+      ) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    document.addEventListener(
+        "mousedown",
+        handleClickOutside
+    );
+
+    return () => {
+      document.removeEventListener(
+          "mousedown",
+          handleClickOutside
+      );
+    };
+  }, []);
+
+  // ==========================================
+  // CLOSE DROPDOWN ON ROUTE CHANGE
+  // ==========================================
+
+  useEffect(() => {
+    setIsProfileOpen(false);
+  }, [location.pathname]);
+
+  // ==========================================
+  // CART ANIMATION
+  // ==========================================
+
+  useEffect(() => {
+    if (cartCount === 0) {
+      setCartAnimation(false);
+      return;
+    }
+
+    setCartAnimation(true);
 
     const timer = setTimeout(() => {
       setCartAnimation(false);
@@ -31,34 +123,81 @@ const Menubar = () => {
     return () => clearTimeout(timer);
   }, [cartCount]);
 
+  // ==========================================
+  // LOGOUT
+  // ==========================================
+
   const logout = () => {
     localStorage.removeItem("token");
+
     setToken("");
     setQuantities({});
+    setProfileImage("");
+    setIsProfileOpen(false);
+
     navigate("/");
   };
+
+  // ==========================================
+  // ACTIVE LINK
+  // ==========================================
 
   const isActive = (path) => {
     return location.pathname === path;
   };
 
+  // ==========================================
+  // PROFILE IMAGE ERROR
+  // ==========================================
+
+  const handleProfileImageError = () => {
+    console.error(
+        "Profile image failed to load"
+    );
+
+    setProfileImage("");
+  };
+
+  // ==========================================
+  // TOGGLE DROPDOWN
+  // ==========================================
+
+  const toggleProfileDropdown = () => {
+    setIsProfileOpen((prev) => !prev);
+  };
+
   return (
       <nav className="food-navbar">
+
         <div className="container-fluid px-4">
+
           <div className="navbar-wrapper">
 
-            <Link to="/" className="navbar-brand">
+            {/* =================================
+                        LOGO
+                    ================================= */}
+
+            <Link
+                to="/"
+                className="navbar-brand"
+            >
               <img
                   src={assets.logo}
                   alt="Foodies"
                   className="nav-logo"
               />
+
               <span className="brand-name">
                             Foodies
                         </span>
             </Link>
 
+            {/* =================================
+                        NAVIGATION
+                    ================================= */}
+
             <div className="nav-links">
+
               <Link
                   to="/"
                   className={
@@ -91,9 +230,18 @@ const Menubar = () => {
               >
                 Contact
               </Link>
+
             </div>
 
+            {/* =================================
+                        RIGHT ACTIONS
+                    ================================= */}
+
             <div className="nav-actions">
+
+              {/* =================================
+                            CART
+                        ================================= */}
 
               <Link
                   to="/cart"
@@ -115,73 +263,267 @@ const Menubar = () => {
                 )}
               </Link>
 
+              {/* =================================
+                            LOGIN / REGISTER
+                        ================================= */}
+
               {!token ? (
                   <>
                     <button
+                        type="button"
                         className="login-btn"
-                        onClick={() => navigate("/login")}
+                        onClick={() =>
+                            navigate("/login")
+                        }
                     >
                       Login
                     </button>
 
                     <button
+                        type="button"
                         className="register-btn"
-                        onClick={() => navigate("/register")}
+                        onClick={() =>
+                            navigate("/register")
+                        }
                     >
                       Register
                     </button>
                   </>
               ) : (
-                  <div className="dropdown">
+
+                  /* =================================
+                     PROFILE DROPDOWN
+                  ================================= */
+
+                  <div
+                      className="profile-dropdown"
+                      ref={dropdownRef}
+                  >
+
+                    {/* PROFILE BUTTON */}
 
                     <button
-                        className="profile-btn dropdown-toggle"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
+                        type="button"
+                        className={
+                          isProfileOpen
+                              ? "profile-btn profile-btn-active"
+                              : "profile-btn"
+                        }
+                        onClick={
+                          toggleProfileDropdown
+                        }
+                        title="Account"
+                        aria-expanded={
+                          isProfileOpen
+                        }
                     >
-                      <img
-                          src={assets.profile}
-                          alt="profile"
-                      />
+
+                      {profileImage ? (
+                          <img
+                              src={profileImage}
+                              alt="Profile"
+                              className="navbar-profile-image"
+                              onError={
+                                handleProfileImageError
+                              }
+                          />
+                      ) : (
+                          <img
+                              src={assets.profile}
+                              alt="Profile"
+                              className="navbar-profile-image"
+                          />
+                      )}
+
+                      <span className="profile-online-dot"></span>
+
+                      <span
+                          className={
+                            isProfileOpen
+                                ? "profile-arrow profile-arrow-open"
+                                : "profile-arrow"
+                          }
+                      >
+                                        ▼
+                                    </span>
+
                     </button>
 
-                    <ul className="dropdown-menu profile-menu">
+                    {/* =================================
+                                    DROPDOWN MENU
+                                ================================= */}
 
-                      <li>
-                        <button
-                            type="button"
-                            onClick={() => navigate("/profile")}
-                        >
-                          👤 Profile
-                        </button>
-                      </li>
+                    {isProfileOpen && (
+                        <div className="profile-menu">
 
-                      <li>
-                        <button
-                            type="button"
-                            onClick={() => navigate("/myorders")}
-                        >
-                          🛍️ My Orders
-                        </button>
-                      </li>
+                          {/* MENU HEADER */}
 
-                      <li>
-                        <button
-                            type="button"
-                            onClick={logout}
-                        >
-                          🚪 Logout
-                        </button>
-                      </li>
+                          <div className="profile-menu-header">
 
-                    </ul>
+                            <div className="profile-menu-avatar">
+
+                              {profileImage ? (
+                                  <img
+                                      src={profileImage}
+                                      alt="Profile"
+                                  />
+                              ) : (
+                                  <img
+                                      src={assets.profile}
+                                      alt="Profile"
+                                  />
+                              )}
+
+                            </div>
+
+                            <div>
+                              <strong>
+                                My Account
+                              </strong>
+
+                              <span>
+                                                    Manage your account
+                                                </span>
+                            </div>
+
+                          </div>
+
+                          <div className="profile-menu-divider"></div>
+
+                          {/* =================================
+                                            MY PROFILE
+                                        ================================= */}
+
+                          <button
+                              type="button"
+                              className="profile-menu-item"
+                              onClick={() =>
+                                  navigate(
+                                      "/profile"
+                                  )
+                              }
+                          >
+                                            <span className="menu-icon profile-icon">
+                                                👤
+                                            </span>
+
+                            <span className="menu-text">
+                                                <strong>
+                                                    My Profile
+                                                </strong>
+
+                                                <small>
+                                                    View and edit profile
+                                                </small>
+                                            </span>
+
+                            <span className="menu-arrow">
+                                                →
+                                            </span>
+                          </button>
+
+                          {/* =================================
+                                            MY ORDERS
+                                        ================================= */}
+
+                          <button
+                              type="button"
+                              className="profile-menu-item"
+                              onClick={() =>
+                                  navigate(
+                                      "/myorders"
+                                  )
+                              }
+                          >
+                                            <span className="menu-icon orders-icon">
+                                                🛍️
+                                            </span>
+
+                            <span className="menu-text">
+                                                <strong>
+                                                    My Orders
+                                                </strong>
+
+                                                <small>
+                                                    Track your orders
+                                                </small>
+                                            </span>
+
+                            <span className="menu-arrow">
+                                                →
+                                            </span>
+                          </button>
+
+                          {/* =================================
+                                            FAVORITES
+                                        ================================= */}
+
+                          <button
+                              type="button"
+                              className="profile-menu-item"
+                              onClick={() =>
+                                  navigate(
+                                      "/favorites"
+                                  )
+                              }
+                          >
+                                            <span className="menu-icon favorites-icon">
+                                                ❤️
+                                            </span>
+
+                            <span className="menu-text">
+                                                <strong>
+                                                    Favorites
+                                                </strong>
+
+                                                <small>
+                                                    View your favorite foods
+                                                </small>
+                                            </span>
+
+                            <span className="menu-arrow">
+                                                →
+                                            </span>
+                          </button>
+
+                          <div className="profile-menu-divider"></div>
+
+                          {/* =================================
+                                            LOGOUT
+                                        ================================= */}
+
+                          <button
+                              type="button"
+                              className="profile-menu-item logout-item"
+                              onClick={logout}
+                          >
+                                            <span className="menu-icon logout-icon">
+                                                🚪
+                                            </span>
+
+                            <span className="menu-text">
+                                                <strong>
+                                                    Logout
+                                                </strong>
+
+                                                <small>
+                                                    Sign out of your account
+                                                </small>
+                                            </span>
+                          </button>
+
+                        </div>
+                    )}
+
                   </div>
               )}
 
             </div>
 
           </div>
+
         </div>
+
       </nav>
   );
 };

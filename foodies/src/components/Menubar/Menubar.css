@@ -1,65 +1,103 @@
+/* =========================================================
+   NAVBAR
+========================================================= */
+
 .food-navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
+
   padding: 14px 0;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+
+  background: rgba(255, 255, 255, 0.94);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+          0 8px 30px rgba(0, 0, 0, 0.08);
+
+  border-bottom: 1px solid rgba(255, 99, 71, 0.08);
 }
 
 .navbar-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   min-height: 52px;
 }
 
-/* LOGO */
+
+/* =========================================================
+   LOGO
+========================================================= */
 
 .navbar-brand {
   display: flex;
   align-items: center;
+
   text-decoration: none;
+
   flex-shrink: 0;
 }
 
 .nav-logo {
   width: 52px;
   height: 52px;
+
   object-fit: contain;
+
   transition: 0.4s ease;
 }
 
 .navbar-brand:hover .nav-logo {
-  transform: rotate(-10deg) scale(1.1);
+  transform:
+          rotate(-10deg)
+          scale(1.1);
 }
 
 .brand-name {
   margin-left: 10px;
+
   font-size: 26px;
   font-weight: 900;
-  background: linear-gradient(90deg, tomato, orange);
+
+  background:
+          linear-gradient(
+                  90deg,
+                  tomato,
+                  orange
+          );
+
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* NAVIGATION LINKS */
+
+/* =========================================================
+   NAVIGATION LINKS
+========================================================= */
 
 .nav-links {
   display: flex;
   align-items: center;
+
   gap: 35px;
 }
 
 .food-nav-link {
   position: relative;
+
   text-decoration: none;
+
   color: #334155;
-  font-weight: 600;
+
   font-size: 16px;
+  font-weight: 600;
+
   padding: 8px 0;
+
   transition: 0.3s ease;
 }
 
@@ -69,13 +107,24 @@
 
 .food-nav-link::after {
   content: "";
+
   position: absolute;
+
   bottom: -4px;
   left: 0;
+
   width: 0;
   height: 3px;
+
   border-radius: 10px;
-  background: linear-gradient(90deg, tomato, orange);
+
+  background:
+          linear-gradient(
+                  90deg,
+                  tomato,
+                  orange
+          );
+
   transition: 0.3s ease;
 }
 
@@ -88,30 +137,42 @@
   color: tomato;
 }
 
-/* RIGHT ACTIONS */
+
+/* =========================================================
+   RIGHT ACTIONS
+========================================================= */
 
 .nav-actions {
   display: flex;
   align-items: center;
+
   gap: 15px;
 }
 
-/* CART */
+
+/* =========================================================
+   CART
+========================================================= */
 
 .cart-wrapper {
   position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 42px;
   height: 42px;
+
   text-decoration: none;
 }
 
 .cart-wrapper img {
   width: 34px;
   height: 34px;
+
   object-fit: contain;
+
   transition: 0.3s ease;
 }
 
@@ -121,131 +182,514 @@
 
 .cart-count {
   position: absolute;
+
   top: -5px;
   right: -5px;
+
   width: 22px;
   height: 22px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, tomato, orange);
+
+  background:
+          linear-gradient(
+                  135deg,
+                  tomato,
+                  orange
+          );
+
   color: white;
+
   font-size: 12px;
   font-weight: 700;
+
   border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(255, 99, 71, 0.3);
+
+  box-shadow:
+          0 4px 10px rgba(255, 99, 71, 0.3);
 }
 
 .cart-animation img {
-  animation: cartBounce 0.4s ease;
+  animation:
+          cartBounce 0.4s ease;
 }
 
 @keyframes cartBounce {
+
   50% {
-    transform: scale(1.3) rotate(-10deg);
+    transform:
+            scale(1.3)
+            rotate(-10deg);
   }
+
 }
 
-/* LOGIN & REGISTER BUTTONS */
+
+/* =========================================================
+   LOGIN / REGISTER
+========================================================= */
 
 .login-btn,
 .register-btn {
   border: none;
+
   padding: 10px 22px;
+
   border-radius: 30px;
+
   font-size: 14px;
   font-weight: 700;
+
   cursor: pointer;
+
   transition: 0.3s ease;
 }
 
 .login-btn {
   background: white;
+
   border: 2px solid tomato;
+
   color: tomato;
 }
 
 .register-btn {
-  background: linear-gradient(135deg, tomato, orange);
+  background:
+          linear-gradient(
+                  135deg,
+                  tomato,
+                  orange
+          );
+
   color: white;
-  box-shadow: 0 5px 15px rgba(255, 99, 71, 0.15);
+
+  box-shadow:
+          0 5px 15px rgba(255, 99, 71, 0.15);
 }
 
 .login-btn:hover,
 .register-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(255, 99, 71, 0.25);
+
+  box-shadow:
+          0 10px 20px rgba(255, 99, 71, 0.25);
 }
 
-.login-btn:active,
-.register-btn:active {
-  transform: translateY(0);
-}
 
-/* PROFILE */
+/* =========================================================
+   PROFILE DROPDOWN CONTAINER
+========================================================= */
 
-.dropdown {
+.profile-dropdown {
   position: relative;
 }
 
+
+/* =========================================================
+   PROFILE BUTTON
+========================================================= */
+
 .profile-btn {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
   border: none;
+
   background: transparent;
-  padding: 0;
+
+  padding: 2px;
+
   cursor: pointer;
+
+  outline: none;
 }
 
-.profile-btn::after {
-  display: none;
+.profile-btn:focus {
+  outline: none;
 }
 
-.profile-btn img {
-  width: 42px;
-  height: 42px;
+
+/* =========================================================
+   PROFILE IMAGE
+========================================================= */
+
+.navbar-profile-image {
+  width: 44px;
+  height: 44px;
+
   object-fit: cover;
+
   border-radius: 50%;
+
   border: 3px solid tomato;
-  transition: 0.3s ease;
+
+  background: white;
+
+  transition: all 0.3s ease;
+
+  box-shadow:
+          0 4px 15px rgba(255, 99, 71, 0.25);
 }
 
-.profile-btn:hover img {
-  transform: scale(1.08);
-  box-shadow: 0 5px 15px rgba(255, 99, 71, 0.25);
+.profile-btn:hover .navbar-profile-image,
+.profile-btn-active .navbar-profile-image {
+  transform: scale(1.06);
+
+  border-color: orange;
+
+  box-shadow:
+          0 7px 22px rgba(255, 99, 71, 0.35);
 }
 
-/* PROFILE DROPDOWN */
+
+/* =========================================================
+   ONLINE DOT
+========================================================= */
+
+.profile-online-dot {
+  position: absolute;
+
+  right: 4px;
+  bottom: 3px;
+
+  width: 11px;
+  height: 11px;
+
+  background: #22c55e;
+
+  border: 2px solid white;
+
+  border-radius: 50%;
+
+  box-shadow:
+          0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================================================
+   DROPDOWN ARROW
+========================================================= */
+
+.profile-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 18px;
+  height: 18px;
+
+  color: #64748b;
+
+  font-size: 9px;
+
+  transition: transform 0.25s ease;
+}
+
+.profile-arrow-open {
+  transform: rotate(180deg);
+
+  color: tomato;
+}
+
+
+/* =========================================================
+   PROFILE MENU
+========================================================= */
 
 .profile-menu {
-  min-width: 180px;
-  margin-top: 12px !important;
-  border: none;
-  border-radius: 18px;
+  position: absolute;
+
+  top: calc(100% + 15px);
+  right: 0;
+
+  width: 285px;
+
   padding: 10px;
-  background: white;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+
+  background:
+          rgba(255, 255, 255, 0.98);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 99, 71, 0.1);
+
+  border-radius: 20px;
+
+  box-shadow:
+          0 25px 60px rgba(15, 23, 42, 0.18);
+
+  animation:
+          dropdownOpen 0.25s ease;
+
+  transform-origin: top right;
+}
+
+@keyframes dropdownOpen {
+
+  from {
+    opacity: 0;
+    transform:
+            translateY(-8px)
+            scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+            translateY(0)
+            scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   MENU HEADER
+========================================================= */
+
+.profile-menu-header {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px;
+
+  border-radius: 15px;
+
+  background:
+          linear-gradient(
+                  135deg,
+                  rgba(255, 99, 71, 0.08),
+                  rgba(255, 165, 0, 0.08)
+          );
+}
+
+.profile-menu-avatar {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
   overflow: hidden;
+
+  border: 2px solid tomato;
+
+  background: white;
 }
 
-.profile-menu li {
-  list-style: none;
-  padding: 12px 18px;
+.profile-menu-avatar img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.profile-menu-header strong {
+  display: block;
+
+  color: #1e293b;
+
+  font-size: 15px;
+}
+
+.profile-menu-header span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.profile-menu-divider {
+  height: 1px;
+
+  margin: 8px 5px;
+
+  background:
+          linear-gradient(
+                  90deg,
+                  transparent,
+                  #e2e8f0,
+                  transparent
+          );
+}
+
+
+/* =========================================================
+   MENU ITEM
+========================================================= */
+
+.profile-menu-item {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 10px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: transparent;
+
+  text-align: left;
+
   cursor: pointer;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #334155;
-  transition: 0.3s ease;
+
+  transition:
+          transform 0.25s ease,
+          background 0.25s ease;
 }
 
-.profile-menu li:hover {
-  background: rgba(255, 99, 71, 0.1);
-  color: tomato;
+.profile-menu-item:hover {
+  background:
+          linear-gradient(
+                  135deg,
+                  rgba(255, 99, 71, 0.09),
+                  rgba(255, 165, 0, 0.07)
+          );
+
   transform: translateX(3px);
 }
 
-/* TABLET */
+
+/* =========================================================
+   MENU ICON
+========================================================= */
+
+.menu-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  font-size: 18px;
+
+  transition: 0.25s ease;
+}
+
+.profile-icon {
+  background:
+          rgba(255, 99, 71, 0.12);
+}
+
+.orders-icon {
+  background:
+          rgba(59, 130, 246, 0.12);
+}
+
+.logout-icon {
+  background:
+          rgba(239, 68, 68, 0.12);
+}
+
+.profile-menu-item:hover .menu-icon {
+  transform: scale(1.1);
+}
+
+
+/* =========================================================
+   MENU TEXT
+========================================================= */
+
+.menu-text {
+  flex: 1;
+}
+
+.menu-text strong {
+  display: block;
+
+  color: #334155;
+
+  font-size: 14px;
+
+  transition: color 0.25s ease;
+}
+
+.menu-text small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+.profile-menu-item:hover .menu-text strong {
+  color: tomato;
+}
+
+
+/* =========================================================
+   RIGHT ARROW
+========================================================= */
+
+.menu-arrow {
+  color: #94a3b8;
+
+  font-size: 18px;
+
+  transition: 0.25s ease;
+}
+
+.profile-menu-item:hover .menu-arrow {
+  color: tomato;
+
+  transform: translateX(3px);
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.logout-item:hover {
+  background:
+          rgba(239, 68, 68, 0.08);
+}
+
+.logout-item:hover .menu-text strong {
+  color: #dc2626;
+}
+
+.logout-item:hover .menu-arrow {
+  color: #dc2626;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
 
 @media (max-width: 992px) {
+
   .nav-links {
     gap: 22px;
   }
@@ -254,25 +698,26 @@
     gap: 10px;
   }
 
-  .login-btn,
-  .register-btn {
-    padding: 9px 17px;
-  }
-
   .brand-name {
     font-size: 23px;
   }
+
 }
 
-/* MOBILE */
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 768px) {
+
   .food-navbar {
     padding: 12px 0;
   }
 
   .navbar-wrapper {
     flex-direction: column;
+
     gap: 15px;
   }
 
@@ -282,6 +727,7 @@
 
   .nav-actions {
     justify-content: center;
+
     flex-wrap: wrap;
   }
 
@@ -297,11 +743,16 @@
   .brand-name {
     font-size: 23px;
   }
+
 }
 
-/* SMALL MOBILE */
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
 
 @media (max-width: 480px) {
+
   .navbar-wrapper {
     gap: 12px;
   }
@@ -321,6 +772,7 @@
   .login-btn,
   .register-btn {
     padding: 8px 15px;
+
     font-size: 13px;
   }
 
@@ -334,23 +786,34 @@
     height: 30px;
   }
 
-  .profile-btn img {
+  .navbar-profile-image {
     width: 38px;
     height: 38px;
   }
 
   .profile-menu {
-    min-width: 165px;
+    width: 270px;
+
+    right: -10px;
   }
+
 }
 
-/* REDUCE MOTION */
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
+
     animation: none !important;
+
     transition: none !important;
+
   }
+
 }

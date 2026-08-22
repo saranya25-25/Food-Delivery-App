@@ -32,24 +32,90 @@ public class OrderServiceImpl implements OrderService {
     private String RAZORPAY_SECRET;
 
     @Override
-    public OrderResponse createOrderWithPayment(OrderRequest request) throws RazorpayException {
-        OrderEntity newOrder = convertToEntity(request);
-        newOrder = orderRepository.save(newOrder);
+    public OrderResponse createOrderWithPayment(OrderRequest request)
+            throws RazorpayException {
+
+        // ============================================
+        // SAVE ORDER ADDRESS AS USER'S SAVED ADDRESS
+        // ============================================
+
+        if (request.getUserAddress() != null &&
+                !request.getUserAddress().isBlank()) {
+
+            userService.updateProfile(
+                    com.FoodDeliveryApp.foodiesapi.io.UserRequest.builder()
+                            .address(request.getUserAddress())
+                            .build()
+            );
+        }
 
 
-        //create razorpay payment order
-        RazorpayClient razorpayClient = new RazorpayClient(RAZORPAY_KEY, RAZORPAY_SECRET);
-        JSONObject orderRequest = new JSONObject();
-        orderRequest.put("amount", newOrder.getAmount() * 100);
-        orderRequest.put("currency", "INR");
-        orderRequest.put("payment_capture", 1);
+        // ============================================
+        // CREATE ORDER
+        // ============================================
 
-        Order razorpayOrder = razorpayClient.orders.create(orderRequest);
-        newOrder.setRazorpayOrderId(razorpayOrder.get("id"));
-        //newOrder.setAmount(razorpayOrder.get("amount"));
-        String loggedInUserId = userService.findByUserId();
-        newOrder.setUserId(loggedInUserId);
-        newOrder = orderRepository.save(newOrder);
+        OrderEntity newOrder =
+                convertToEntity(request);
+
+        newOrder =
+                orderRepository.save(newOrder);
+
+
+        // ============================================
+        // CREATE RAZORPAY PAYMENT ORDER
+        // ============================================
+
+        RazorpayClient razorpayClient =
+                new RazorpayClient(
+                        RAZORPAY_KEY,
+                        RAZORPAY_SECRET
+                );
+
+        JSONObject orderRequest =
+                new JSONObject();
+
+        orderRequest.put(
+                "amount",
+                newOrder.getAmount() * 100
+        );
+
+        orderRequest.put(
+                "currency",
+                "INR"
+        );
+
+        orderRequest.put(
+                "payment_capture",
+                1
+        );
+
+
+        Order razorpayOrder =
+                razorpayClient.orders.create(
+                        orderRequest
+                );
+
+
+        newOrder.setRazorpayOrderId(
+                razorpayOrder.get("id")
+        );
+
+
+        // ============================================
+        // SET LOGGED-IN USER
+        // ============================================
+
+        String loggedInUserId =
+                userService.findByUserId();
+
+        newOrder.setUserId(
+                loggedInUserId
+        );
+
+        newOrder =
+                orderRepository.save(newOrder);
+
+
         return convertToResponse(newOrder);
     }
 
