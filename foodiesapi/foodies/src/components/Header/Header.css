@@ -1,0 +1,186 @@
+/* ==========================================================
+   FOODIES HERO HEADER
+========================================================== */
+.hero-header {
+  position:relative;
+  min-height:520px;
+  border-radius:35px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  background-size:cover;
+  background-position:center;
+  animation:
+          backgroundMove 18s ease-in-out infinite alternate;
+}
+@keyframes backgroundMove{
+  from{
+    background-position:center;
+    transform:scale(1);
+  }
+  to{
+    background-position:right center;
+    transform:scale(1.05);
+  }
+}
+/* ================= OVERLAY ================= */
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:
+          linear-gradient(
+                  120deg,
+                  rgba(255,255,255,.35),
+                  rgba(255,255,255,.08)
+          );
+  z-index:1;
+}
+/* ================= CONTENT ================= */
+.hero-content{
+  position:relative;
+  z-index:3;
+  max-width:650px;
+  padding:60px;
+  color:white;
+  animation:
+          contentReveal .8s ease both;
+}
+@keyframes contentReveal{
+  from{
+    opacity:0;
+    transform:translateY(35px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+/* ================= TITLE ================= */
+.hero-title{
+  font-size:
+          clamp(2.5rem,5vw,4.5rem);
+  font-weight:900;
+  line-height:1.1;
+  margin-bottom:20px;
+  text-shadow:
+          0 8px 25px rgba(0,0,0,.45);
+}
+.hero-title span{
+  background:
+          linear-gradient(
+                  90deg,
+                  tomato,
+                  orange
+          );
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.hero-description{
+  font-size:20px;
+  line-height:1.7;
+  max-width:520px;
+  color:#fff;
+  margin-bottom:35px;
+}
+/* ================= BUTTON ================= */
+.hero-button{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  padding:15px 38px;
+  border-radius:50px;
+  color:white;
+  text-decoration:none;
+  font-weight:800;
+  font-size:18px;
+  background:
+          linear-gradient(
+                  135deg,
+                  tomato,
+                  #ff7043
+          );
+  transition:.35s ease;
+  overflow:hidden;
+  position:relative;
+}
+.hero-button:hover{
+  transform:translateY(-5px);
+  box-shadow:
+          0 20px 45px rgba(255,99,71,.5);
+}
+/* ================= GLASS EFFECT ================= */
+.hero-content::before{
+  content:"";
+  position:absolute;
+  inset:-25px;
+  background:
+          rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  border-radius:35px;
+  border:
+          1px solid rgba(255,255,255,.15);
+  z-index:-1;
+}
+/* ================= 3D BURGER ================= */
+.food-3d{
+  position:absolute;
+  right:20px;
+  top:10px;
+  width:520px;
+  height:520px;
+  z-index:2;
+  animation:
+          burgerEntrance 1.5s ease both;
+}
+.food-3d canvas{
+  filter:
+          drop-shadow(
+                  0 40px 60px rgba(0,0,0,.45)
+          );
+}
+@keyframes burgerEntrance{
+  from{
+    opacity:0;
+    transform:
+            translateX(200px)
+            scale(.3);
+  }
+  to{
+    opacity:1;
+    transform:
+            translateX(0)
+            scale(1);
+  }
+}
+/* ================= MOBILE ================= */
+@media(max-width:900px){
+  .food-3d{
+    display:none;
+  }
+}
+@media(max-width:768px){
+  .hero-header{
+    min-height:450px;
+    border-radius:25px;
+  }
+  .hero-content{
+    padding:35px;
+    text-align:center;
+  }
+  .hero-title{
+    font-size:2.5rem;
+  }
+  .hero-description{
+    font-size:16px;
+  }
+  .hero-button{
+    padding:12px 28px;
+    font-size:16px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  *{
+    animation:none!important;
+    transition:none!important;
+  }
+}

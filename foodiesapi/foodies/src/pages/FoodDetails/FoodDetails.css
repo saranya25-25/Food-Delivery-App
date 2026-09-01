@@ -1,0 +1,198 @@
+/* ==========================================================
+   FOOD DETAILS PAGE
+   Premium Restaurant Product Experience
+========================================================== */
+.food-details-page{
+    min-height:100vh;
+    padding:50px 20px;
+    background:
+            linear-gradient(
+                    135deg,
+                    #fff7ed,
+                    #ffffff
+            );
+}
+/* ================= MAIN CARD ================= */
+.food-details-card{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    padding:40px;
+    background:white;
+    border-radius:35px;
+    box-shadow:
+            0 25px 60px rgba(0,0,0,.1);
+    animation:
+            detailsAppear .6s ease;
+}
+@keyframes detailsAppear{
+    from{
+        opacity:0;
+        transform:
+                translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:
+                translateY(0);
+    }
+}
+/* ================= IMAGE ================= */
+.details-image-section{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.details-food-image{
+    width:100%;
+    max-height:500px;
+    object-fit:cover;
+    border-radius:30px;
+    transition:.5s ease;
+    box-shadow:
+            0 15px 35px rgba(0,0,0,.15);
+}
+.details-food-image:hover{
+    transform:
+            scale(1.04);
+}
+/* ================= CONTENT ================= */
+.details-content{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.food-category{
+    width:max-content;
+    padding:
+            8px 18px;
+    border-radius:30px;
+    background:
+            linear-gradient(
+                    135deg,
+                    tomato,
+                    orange
+            );
+    color:white;
+    font-weight:700;
+    margin-bottom:20px;
+}
+.details-content h1{
+    font-size:45px;
+    font-weight:900;
+    color:#111827;
+    margin-bottom:15px;
+}
+.details-content h1::first-letter{
+    color:tomato;
+}
+/* ================= RATING ================= */
+.details-rating{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#f59e0b;
+    font-weight:700;
+    margin-bottom:20px;
+}
+.details-rating span{
+    color:#64748b;
+    font-weight:500;
+}
+/* ================= PRICE ================= */
+.details-price{
+    font-size:35px;
+    font-weight:900;
+    color:#16a34a;
+    margin-bottom:20px;
+}
+.details-content p{
+    color:#64748b;
+    font-size:17px;
+    line-height:1.8;
+    margin-bottom:35px;
+}
+/* ================= BUTTON ================= */
+.order-button{
+    width:max-content;
+    border:none;
+    padding:
+            15px 35px;
+    border-radius:50px;
+    background:
+            linear-gradient(
+                    135deg,
+                    tomato,
+                    #ff8c00
+            );
+    color:white;
+    font-size:17px;
+    font-weight:800;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+    transition:.35s ease;
+}
+.order-button:hover{
+    transform:
+            translateY(-5px);
+    box-shadow:
+            0 15px 30px rgba(255,99,71,.4);
+}
+.order-button:active{
+    transform:
+            scale(.95);
+}
+/* ================= LOADING ================= */
+.food-loading{
+    min-height:70vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+    font-weight:700;
+    color:tomato;
+    animation:
+            loadingPulse 1.5s infinite;
+}
+@keyframes loadingPulse{
+    50%{
+        opacity:.5;
+    }
+}
+/* ================= RESPONSIVE ================= */
+@media(max-width:900px){
+    .food-details-card{
+        grid-template-columns:1fr;
+        padding:25px;
+        gap:30px;
+    }
+    .details-content h1{
+        font-size:35px;
+    }
+}
+@media(max-width:500px){
+    .food-details-page{
+        padding:20px 10px;
+    }
+    .details-content h1{
+        font-size:28px;
+    }
+    .details-price{
+        font-size:28px;
+    }
+    .order-button{
+        width:100%;
+        justify-content:center;
+    }
+}
+/* ================= REDUCED MOTION ================= */
+@media(prefers-reduced-motion:reduce){
+    *{
+        animation:none!important;
+        transition:none!important;
+    }
+}

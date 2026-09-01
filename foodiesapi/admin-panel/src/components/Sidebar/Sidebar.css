@@ -1,0 +1,141 @@
+/* ===========================
+   FOODIES ADMIN SIDEBAR
+=========================== */
+.sidebar{
+  width:260px;
+  min-height:100vh;
+  background:#0f172a;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transition:.35s ease;
+  box-shadow:4px 0 18px rgba(0,0,0,.08);
+}
+.sidebar-open{
+  margin-left:0;
+}
+.sidebar-close{
+  margin-left:-260px;
+}
+/* ===========================
+   TOP
+=========================== */
+.sidebar-top{
+  padding:30px 20px;
+  text-align:center;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.sidebar-logo{
+  width:75px;
+  height:75px;
+  object-fit:contain;
+  transition:.35s;
+}
+.sidebar-logo:hover{
+  transform:scale(1.08) rotate(-4deg);
+}
+.sidebar-title{
+  margin-top:15px;
+  margin-bottom:2px;
+  font-weight:700;
+  color:#fff;
+}
+.sidebar-subtitle{
+  color:#94a3b8;
+  font-size:14px;
+}
+/* ===========================
+   MENU
+=========================== */
+.sidebar-menu{
+  padding:20px 15px;
+  flex:1;
+}
+.sidebar-item{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  color:#cbd5e1;
+  text-decoration:none;
+  padding:14px 18px;
+  margin-bottom:10px;
+  border-radius:14px;
+  transition:.3s;
+}
+.sidebar-item i{
+  font-size:20px;
+  transition:.3s;
+}
+.sidebar-item span{
+  font-size:15px;
+  font-weight:500;
+}
+.sidebar-item:hover{
+  background:#1e293b;
+  color:#ffffff;
+  transform:translateX(6px);
+}
+.sidebar-item:hover i{
+  color:#10b981;
+}
+/* ===========================
+   ACTIVE
+=========================== */
+.sidebar-item.active{
+  background:#10b981;
+  color:#ffffff;
+  box-shadow:0 8px 20px rgba(16,185,129,.35);
+}
+.sidebar-item.active i{
+  color:#ffffff;
+}
+/* ===========================
+   FOOTER
+=========================== */
+.sidebar-footer{
+  padding:20px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.version-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  background:#1e293b;
+  padding:12px;
+  border-radius:12px;
+  color:#cbd5e1;
+  font-size:14px;
+}
+.version-box i{
+  color:#10b981;
+}
+/* ===========================
+   SCROLLBAR
+=========================== */
+.sidebar::-webkit-scrollbar{
+  width:5px;
+}
+.sidebar::-webkit-scrollbar-thumb{
+  background:#10b981;
+  border-radius:20px;
+}
+/* ===========================
+   MOBILE
+=========================== */
+@media(max-width:768px){
+  .sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:999;
+  }
+  .sidebar-logo{
+    width:60px;
+    height:60px;
+  }
+  .sidebar-title{
+    font-size:22px;
+  }
+}

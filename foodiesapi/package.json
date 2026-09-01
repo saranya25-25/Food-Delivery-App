@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "react-easy-crop": "^6.2.3",
+    "react-router-dom": "^7.18.0"
+  }
+}
