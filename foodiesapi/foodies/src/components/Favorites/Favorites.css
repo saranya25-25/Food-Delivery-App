@@ -1,0 +1,572 @@
+/* ==========================================================
+   FAVORITES PAGE
+========================================================== */
+.favorites-page {
+    min-height: 100vh;
+    width: 100%;
+    background:
+            linear-gradient(
+                    135deg,
+                    #fff8f5 0%,
+                    #ffffff 45%,
+                    #fff5f7 100%
+            );
+    padding-bottom: 80px;
+    animation: favoritesPageEnter 0.7s ease both;
+}
+/* ==========================================================
+   PAGE ENTER ANIMATION
+========================================================== */
+@keyframes favoritesPageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* ==========================================================
+   CONTAINER
+========================================================== */
+.favorites-page .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+/* ==========================================================
+   HEADER
+========================================================== */
+.favorites-header {
+    padding-top: 35px;
+    margin-bottom: 35px;
+}
+.favorites-header h1 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #172033;
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1.2;
+}
+.favorites-header h1::first-letter {
+    color: #ff3b5c;
+}
+.favorites-header p {
+    margin: 10px 0 0;
+    color: #64748b;
+    font-size: 17px;
+    font-weight: 500;
+}
+/* ==========================================================
+   FAVORITES GRID
+========================================================== */
+.favorites-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 28px;
+}
+/* ==========================================================
+   FAVORITE CARD
+========================================================== */
+.favorite-card {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 24px;
+    box-shadow:
+            0 10px 30px rgba(15, 23, 42, 0.07);
+    transition:
+            transform 0.35s ease,
+            box-shadow 0.35s ease,
+            border-color 0.35s ease;
+    animation: favoriteCardEnter 0.6s ease both;
+}
+/* CARD STAGGER */
+.favorite-card:nth-child(1) {
+    animation-delay: 0.05s;
+}
+.favorite-card:nth-child(2) {
+    animation-delay: 0.10s;
+}
+.favorite-card:nth-child(3) {
+    animation-delay: 0.15s;
+}
+.favorite-card:nth-child(4) {
+    animation-delay: 0.20s;
+}
+.favorite-card:nth-child(5) {
+    animation-delay: 0.25s;
+}
+.favorite-card:nth-child(6) {
+    animation-delay: 0.30s;
+}
+@keyframes favoriteCardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.favorite-card:hover {
+    transform: translateY(-8px);
+    border-color:
+            rgba(255, 99, 71, 0.25);
+    box-shadow:
+            0 20px 45px rgba(15, 23, 42, 0.12);
+}
+/* ==========================================================
+   IMAGE AREA
+========================================================== */
+.favorite-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 245px;
+    overflow: hidden;
+    background:
+            linear-gradient(
+                    135deg,
+                    #fff1e9,
+                    #fff8f5
+            );
+}
+/* ==========================================================
+   FOOD IMAGE
+========================================================== */
+.favorite-food-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition:
+            transform 0.55s ease,
+            filter 0.4s ease;
+}
+/* IMAGE ZOOM */
+.favorite-card:hover .favorite-food-image {
+    transform: scale(1.07);
+    filter: brightness(1.03);
+}
+/* ==========================================================
+   IMAGE GRADIENT
+========================================================== */
+.favorite-image-wrapper::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 80px;
+    background:
+            linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.18),
+                    transparent
+            );
+    pointer-events: none;
+    z-index: 2;
+}
+/* ==========================================================
+   FAVORITE REMOVE BUTTON
+========================================================== */
+.favorite-remove-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background:
+            rgba(255, 255, 255, 0.96);
+    color: #ff3b5c;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow:
+            0 8px 22px rgba(0, 0, 0, 0.15);
+    transition:
+            transform 0.25s ease,
+            background 0.25s ease,
+            box-shadow 0.25s ease;
+}
+.favorite-remove-btn i {
+    font-size: 22px;
+    line-height: 1;
+    transition:
+            transform 0.25s ease;
+}
+/* HOVER */
+.favorite-remove-btn:hover {
+    background: #ff3b5c;
+    color: white;
+    transform: scale(1.12);
+    box-shadow:
+            0 10px 28px rgba(255, 59, 92, 0.4);
+}
+.favorite-remove-btn:hover i {
+    transform:
+            scale(1.2)
+            rotate(-8deg);
+}
+/* CLICK */
+.favorite-remove-btn:active {
+    transform: scale(0.88);
+}
+/* ==========================================================
+   HEART PULSE
+========================================================== */
+.favorite-remove-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid #ff3b5c;
+    opacity: 0;
+    pointer-events: none;
+}
+.favorite-remove-btn:active::after {
+    animation: favoriteRemoveRing 0.5s ease-out;
+}
+@keyframes favoriteRemoveRing {
+    from {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    to {
+        transform: scale(1.45);
+        opacity: 0;
+    }
+}
+/* ==========================================================
+   CONTENT
+========================================================== */
+.favorite-content {
+    padding: 20px;
+}
+/* ==========================================================
+   FOOD NAME
+========================================================== */
+.favorite-content h3 {
+    margin: 0;
+    color: #172033;
+    font-size: 20px;
+    font-weight: 850;
+    line-height: 1.3;
+}
+/* ==========================================================
+   CATEGORY
+========================================================== */
+.favorite-category {
+    display: inline-block;
+    margin: 8px 0 0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #fff1ed;
+    color: tomato;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+.favorite-description {
+    margin: 12px 0 18px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 42px;
+}
+/* ==========================================================
+   BOTTOM
+========================================================== */
+.favorite-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 15px;
+    border-top:
+            1px solid #f1f5f9;
+}
+/* ==========================================================
+   PRICE
+========================================================== */
+.favorite-bottom strong {
+    color: #172033;
+    font-size: 20px;
+    font-weight: 900;
+}
+/* ==========================================================
+   VIEW FOOD BUTTON
+========================================================== */
+.view-food-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 105px;
+    padding: 10px 15px;
+    border-radius: 30px;
+    background:
+            linear-gradient(
+                    135deg,
+                    #ff6347,
+                    #ff7043
+            );
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+    box-shadow:
+            0 6px 18px rgba(255, 99, 71, 0.22);
+    transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+}
+.view-food-btn:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow:
+            0 10px 25px rgba(255, 99, 71, 0.35);
+}
+.view-food-btn:active {
+    transform: scale(0.96);
+}
+/* ==========================================================
+   EMPTY FAVORITES
+========================================================== */
+.empty-favorites {
+    width: 100%;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 50px 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid #eef2f7;
+    border-radius: 28px;
+    box-shadow:
+            0 15px 40px rgba(15, 23, 42, 0.06);
+    animation: emptyFavoritesEnter 0.6s ease both;
+}
+@keyframes emptyFavoritesEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.empty-heart {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    background:
+            linear-gradient(
+                    135deg,
+                    #fff1f2,
+                    #ffe4e6
+            );
+    color: #ff3b5c;
+    box-shadow:
+            0 12px 30px rgba(255, 59, 92, 0.15);
+    animation: emptyHeartFloat 2.5s ease-in-out infinite;
+}
+.empty-heart i {
+    font-size: 42px;
+}
+@keyframes emptyHeartFloat {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-8px) scale(1.05);
+    }
+}
+.empty-favorites h3 {
+    margin: 0 0 8px;
+    color: #172033;
+    font-size: 24px;
+    font-weight: 850;
+}
+.empty-favorites p {
+    margin: 0 0 25px;
+    color: #64748b;
+    font-size: 14px;
+}
+/* ==========================================================
+   EXPLORE BUTTON
+========================================================== */
+.explore-favorites-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px;
+    border-radius: 30px;
+    background:
+            linear-gradient(
+                    135deg,
+                    #ff6347,
+                    #ff7043
+            );
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 800;
+    box-shadow:
+            0 8px 22px rgba(255, 99, 71, 0.25);
+    transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+}
+.explore-favorites-btn:hover {
+    color: white;
+    transform: translateY(-3px);
+    box-shadow:
+            0 12px 28px rgba(255, 99, 71, 0.35);
+}
+/* ==========================================================
+   TABLET
+========================================================== */
+@media (max-width: 1000px) {
+    .favorites-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+        gap: 22px;
+    }
+    .favorite-image-wrapper {
+        height: 230px;
+    }
+    .favorites-header h1 {
+        font-size: 34px;
+    }
+}
+/* ==========================================================
+   MOBILE
+========================================================== */
+@media (max-width: 650px) {
+    .favorites-page {
+        padding-bottom: 50px;
+    }
+    .favorites-page .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .favorites-header {
+        padding-top: 25px;
+        margin-bottom: 25px;
+    }
+    .favorites-header h1 {
+        font-size: 28px;
+        gap: 8px;
+    }
+    .favorites-header p {
+        font-size: 14px;
+    }
+    .favorites-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .favorite-image-wrapper {
+        height: 230px;
+    }
+    .favorite-content {
+        padding: 17px;
+    }
+    .favorite-content h3 {
+        font-size: 18px;
+    }
+    .favorite-description {
+        font-size: 12px;
+    }
+    .favorite-remove-btn {
+        width: 44px;
+        height: 44px;
+        top: 12px;
+        right: 12px;
+    }
+    .favorite-remove-btn i {
+        font-size: 20px;
+    }
+    .favorite-bottom strong {
+        font-size: 18px;
+    }
+    .view-food-btn {
+        min-width: 95px;
+        padding: 9px 13px;
+    }
+}
+/* ==========================================================
+   VERY SMALL MOBILE
+========================================================== */
+@media (max-width: 380px) {
+    .favorites-header h1 {
+        font-size: 25px;
+    }
+    .favorite-image-wrapper {
+        height: 205px;
+    }
+    .favorite-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .view-food-btn {
+        width: 100%;
+    }
+}
+/* ==========================================================
+   ACCESSIBILITY
+========================================================== */
+.favorite-remove-btn:focus-visible,
+.view-food-btn:focus-visible,
+.explore-favorites-btn:focus-visible {
+    outline: 3px solid rgba(255, 99, 71, 0.35);
+    outline-offset: 3px;
+}
+/* ==========================================================
+   REDUCE MOTION
+========================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .favorites-page,
+    .favorite-card,
+    .empty-favorites,
+    .empty-heart {
+        animation: none;
+    }
+    .favorite-card:hover,
+    .favorite-food-image,
+    .favorite-remove-btn,
+    .view-food-btn {
+        transition: none;
+    }
+}

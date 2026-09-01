@@ -1,45 +1,71 @@
-import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 
+import { useState } from "react";
+import {
+    Route,
+    Routes
+} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import AddFood from "./pages/AddFood/AddFood";
 import ListFood from "./pages/ListFood/ListFood";
 import Orders from "./pages/Orders/Orders";
-
 import Sidebar from "./components/Sidebar/Sidebar";
 import Menubar from "./components/Menubar/Menubar";
-
-const App = () => {
-    const [sidebarVisible, setSidebarVisible] = useState(true);
-
+// =========================================================
+// ADMIN LAYOUT
+// =========================================================
+const AdminLayout = () => {
+    const [
+        sidebarVisible,
+        setSidebarVisible
+    ] = useState(true);
+    // =======================================================
+    // TOGGLE SIDEBAR
+    // =======================================================
     const toggleSidebar = () => {
-        setSidebarVisible((prev) => !prev);
+        setSidebarVisible(
+            (previous) => !previous
+        );
     };
-
     return (
         <div
             className="d-flex"
             id="wrapper"
             style={{
                 minHeight: "100vh",
-                background: "#f4f7fc",
+                background: "#f4f7fc"
             }}
         >
-            {/* Sidebar */}
-
-            <Sidebar sidebarVisible={sidebarVisible} />
-
-            {/* Main Content */}
-
+            {/* ================================================= */}
+            {/* SIDEBAR */}
+            {/* ================================================= */}
+            <Sidebar
+                sidebarVisible={
+                    sidebarVisible
+                }
+            />
+            {/* ================================================= */}
+            {/* MAIN CONTENT */}
+            {/* ================================================= */}
             <div
                 id="page-content-wrapper"
                 className="flex-grow-1"
                 style={{
-                    transition: "all .3s ease",
+                    transition:
+                        "all .3s ease",
+                    width: "100%"
                 }}
             >
-                <Menubar toggleSidebar={toggleSidebar} />
-
+                {/* ================================================= */}
+                {/* MENU BAR */}
+                {/* ================================================= */}
+                <Menubar
+                    toggleSidebar={
+                        toggleSidebar
+                    }
+                />
+                {/* ================================================= */}
+                {/* TOAST */}
+                {/* ================================================= */}
                 <ToastContainer
                     position="top-right"
                     autoClose={2500}
@@ -50,48 +76,108 @@ const App = () => {
                     draggable
                     theme="colored"
                 />
-
+                {/* ================================================= */}
+                {/* ADMIN PAGES */}
+                {/* ================================================= */}
                 <div
                     className="container-fluid py-4"
                     style={{
-                        animation: "fadeIn .5s ease",
+                        animation:
+                            "fadeIn .5s ease"
                     }}
                 >
                     <Routes>
-                        <Route path="/" element={<ListFood />} />
-                        <Route path="/add" element={<AddFood />} />
-                        <Route path="/list" element={<ListFood />} />
-                        <Route path="/orders" element={<Orders />} />
+                        {/* ========================================= */}
+                        {/* DEFAULT PAGE */}
+                        {/* ========================================= */}
+                        <Route
+                            path="/"
+                            element={
+                                <ListFood />
+                            }
+                        />
+                        {/* ========================================= */}
+                        {/* ADD FOOD */}
+                        {/* ========================================= */}
+                        <Route
+                            path="/add"
+                            element={
+                                <AddFood />
+                            }
+                        />
+                        {/* ========================================= */}
+                        {/* FOOD LIST */}
+                        {/* ========================================= */}
+                        <Route
+                            path="/list"
+                            element={
+                                <ListFood />
+                            }
+                        />
+                        {/* ========================================= */}
+                        {/* ORDERS */}
+                        {/* ========================================= */}
+                        <Route
+                            path="/orders"
+                            element={
+                                <Orders />
+                            }
+                        />
                     </Routes>
                 </div>
             </div>
-
+            {/* ================================================= */}
+            {/* ANIMATION */}
+            {/* ================================================= */}
             <style>
                 {`
-          @keyframes fadeIn{
-            from{
-              opacity:0;
-              transform:translateY(15px);
-            }
-            to{
-              opacity:1;
-              transform:translateY(0);
-            }
-          }
-
-          #page-content-wrapper{
-            width:100%;
-          }
-
-          @media(max-width:768px){
-            #page-content-wrapper{
-              padding:0;
-            }
-          }
-        `}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+#page-content-wrapper {
+    width: 100%;
+}
+@media(max-width:768px) {
+    #page-content-wrapper {
+        padding: 0;
+    }
+}
+`}
             </style>
         </div>
     );
 };
-
+// =========================================================
+// MAIN APP
+// =========================================================
+const App = () => {
+    return (
+        <Routes>
+            {/* ================================================= */}
+            {/* ADMIN PANEL */}
+            {/* ================================================= */}
+            //
+            // NO LOGIN
+            // NO TOKEN
+            // NO PROTECTED ROUTE
+            //
+            // Open application directly.
+            //
+            // =================================================
+            <Route
+                path="/*"
+                element={
+                    <AdminLayout />
+                }
+            />
+        </Routes>
+    );
+};
 export default App;

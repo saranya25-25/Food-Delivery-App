@@ -1,5 +1,4 @@
 package com.FoodDeliveryApp.foodiesapi.entity;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +9,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "users")
 @Builder
+@Document(collection = "users")
 public class UserEntity {
     @Id
     private String id;
-    private String name;
     @Indexed(unique = true)
     private String email;
     private String password;
+    private String name;
+    private String address;
+    private String role;
+    private String profileImageUrl;
 }

@@ -6,6 +6,5 @@ export const calculateCartTotals = (cartItems, quantities) => {
       const shipping = subtotal === 0 ? 0.0 : 10;
       const tax = subtotal * 0.1; //10%
       const total = subtotal + shipping + tax;
-
       return {subtotal, shipping, tax, total};
 }

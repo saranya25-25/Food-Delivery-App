@@ -1,12 +1,10 @@
 package com.FoodDeliveryApp.foodiesapi.util;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +22,12 @@ public class JwtUtil {
                 .setClaims(claiams)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) //10 hours expiration
+                .setExpiration(
+                        new Date(
+                                System.currentTimeMillis()
+                                        + 1000L * 60 * 60 * 24 * 30
+                        )
+                )
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }

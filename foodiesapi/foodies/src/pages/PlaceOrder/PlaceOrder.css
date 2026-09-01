@@ -2,537 +2,642 @@
    FOODIES PLACE ORDER PAGE
    Premium Checkout UI
 ========================================================== */
-
-
-/* ---------- Main Page ---------- */
-
-.container {
-
-    animation: pageReveal .5s ease both;
-
+/* ==========================================================
+   MAIN PAGE
+========================================================== */
+.place-order-page {
+    animation:
+            pageReveal .5s ease both;
 }
-
-
 @keyframes pageReveal {
-
-    from{
-        opacity:0;
-        transform:translateY(20px);
+    from {
+        opacity: 0;
+        transform:
+                translateY(20px);
     }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
+    to {
+        opacity: 1;
+        transform:
+                translateY(0);
     }
-
 }
-
-
-
-
-/* ---------- Logo ---------- */
-
-
-.container img[alt="Foodies"]{
-
-    animation: logoFloat 3s ease-in-out infinite;
-
+/* ==========================================================
+   LOGO
+========================================================== */
+.place-order-page img[alt="Foodies"] {
+    animation:
+            logoFloat 3s ease-in-out infinite;
 }
-
-
-
 @keyframes logoFloat {
-
-
-    0%,100%{
-        transform:translateY(0);
+    0%,
+    100% {
+        transform:
+                translateY(0);
     }
-
-
-    50%{
-        transform:translateY(-8px);
+    50% {
+        transform:
+                translateY(-8px);
     }
-
-
 }
-
-
-
-
 /* ==========================================================
    ORDER SUMMARY
 ========================================================== */
-
-
-.container .list-group {
-
-
-    border-radius:22px;
-
-    overflow:hidden;
-
-    border:none;
-
-
+.place-order-page .list-group {
+    border-radius:
+            22px;
+    overflow:
+            hidden;
+    border:
+            none;
     box-shadow:
-
-            0 15px 40px rgba(0,0,0,.08);
-
-
-    animation: summaryIn .5s ease both;
-
-
+            0 15px 40px
+            rgba(0, 0, 0, .08);
+    animation:
+            summaryIn .5s ease both;
 }
-
-
-
 @keyframes summaryIn {
-
-
-    from{
-
-        opacity:0;
-
-        transform:translateX(30px);
-
+    from {
+        opacity: 0;
+        transform:
+                translateX(30px);
     }
-
-
-    to{
-
-        opacity:1;
-
-        transform:translateX(0);
-
+    to {
+        opacity: 1;
+        transform:
+                translateX(0);
     }
-
-
 }
-
-
-
-
-
-.container .list-group-item {
-
-
-    padding:18px;
-
-    border:none;
-
-    border-bottom:1px solid #eee;
-
-    transition:.3s ease;
-
-
+.place-order-page .list-group-item {
+    padding:
+            18px;
+    border:
+            none;
+    border-bottom:
+            1px solid #eee;
+    transition:
+            .3s ease;
 }
-
-
-
-.container .list-group-item:hover{
-
-
+.place-order-page .list-group-item:hover {
     background:
-
-            rgba(255,99,71,.06);
-
-
-    transform:translateX(4px);
-
-
+            rgba(255, 99, 71, .06);
+    transform:
+            translateX(4px);
 }
-
-
-
-.container .list-group-item h6{
-
-
-    font-weight:700;
-
+.place-order-page .list-group-item h6 {
+    font-weight:
+            700;
 }
-
-
-
-
-
-.container .badge{
-
-
+.place-order-page .badge {
     background:
-
             linear-gradient(
                     135deg,
                     tomato,
                     #ff8a65
             ) !important;
-
-
-    padding:8px 12px;
-
-    border-radius:20px;
-
-
+    padding:
+            8px 12px;
+    border-radius:
+            20px;
 }
-
-
-
-
-
 /* ==========================================================
-   BILLING CARD
+   BILLING / ADDRESS CARD
 ========================================================== */
-
-
-.container form {
-
-
+.place-order-page form {
     background:
-
-            rgba(255,255,255,.85);
-
-
-    backdrop-filter:blur(10px);
-
-
-    padding:35px;
-
-
-    border-radius:25px;
-
-
+            rgba(255, 255, 255, .85);
+    backdrop-filter:
+            blur(10px);
+    padding:
+            35px;
+    border-radius:
+            25px;
     box-shadow:
-
-
-            0 20px 50px rgba(0,0,0,.08);
-
-
+            0 20px 50px
+            rgba(0, 0, 0, .08);
     animation:
-
             formReveal .5s ease both;
-
-
 }
-
-
-
-
 @keyframes formReveal {
-
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(20px);
-
+    from {
+        opacity: 0;
+        transform:
+                translateY(20px);
     }
-
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
+    to {
+        opacity: 1;
+        transform:
+                translateY(0);
     }
-
-
 }
-
-
-
-
-
-.container .form-label{
-
-
-    font-weight:600;
-
-    color:#333;
-
-
+/* ==========================================================
+   LABEL
+========================================================== */
+.place-order-page .form-label {
+    font-weight:
+            600;
+    color:
+            #333;
 }
-
-
-
-
-
-.container .form-control{
-
-
-    border-radius:14px;
-
-    padding:13px 16px;
-
-
-    border:1px solid #ddd;
-
-
-    transition:.3s ease;
-
-
+/* ==========================================================
+   INPUT
+========================================================== */
+.place-order-page .form-control {
+    border-radius:
+            14px;
+    padding:
+            13px 16px;
+    border:
+            1px solid #ddd;
+    transition:
+            .3s ease;
 }
-
-
-
-.container .form-control:focus{
-
-
-    border-color:tomato;
-
-
+.place-order-page .form-control:focus {
+    border-color:
+            tomato;
     box-shadow:
-
-            0 0 0 4px rgba(255,99,71,.15);
-
-
+            0 0 0 4px
+            rgba(255, 99, 71, .15);
     transform:
-
             translateY(-2px);
-
-
 }
-
-
-
-
+/* ==========================================================
+   DISABLED EMAIL
+========================================================== */
+.place-order-page .saved-email-input {
+    background:
+            #f8fafc;
+    color:
+            #64748b;
+    cursor:
+            not-allowed;
+}
+/* ==========================================================
+   SAVED ADDRESS CARD
+========================================================== */
+.saved-address-card {
+    background:
+            rgba(255, 255, 255, .95);
+    border:
+            1px solid
+            rgba(255, 99, 71, .15);
+    border-radius:
+            22px;
+    padding:
+            24px;
+    box-shadow:
+            0 20px 50px
+            rgba(0, 0, 0, .08);
+    animation:
+            savedAddressAppear .45s ease both;
+}
+@keyframes savedAddressAppear {
+    from {
+        opacity:
+                0;
+        transform:
+                translateY(15px)
+                scale(.98);
+    }
+    to {
+        opacity:
+                1;
+        transform:
+                translateY(0)
+                scale(1);
+    }
+}
+/* ==========================================================
+   SAVED HEADER
+========================================================== */
+.saved-address-header > div {
+    display:
+            flex;
+    align-items:
+            center;
+    gap:
+            14px;
+}
+.saved-icon {
+    width:
+            48px;
+    height:
+            48px;
+    display:
+            flex;
+    align-items:
+            center;
+    justify-content:
+            center;
+    border-radius:
+            15px;
+    background:
+            linear-gradient(
+                    135deg,
+                    #fff0eb,
+                    #fff8f5
+            );
+    font-size:
+            22px;
+}
+.saved-address-header h5 {
+    margin:
+            0;
+    color:
+            #172033;
+    font-size:
+            17px;
+    font-weight:
+            800;
+}
+.saved-address-header p {
+    margin:
+            4px 0 0;
+    color:
+            #94a3b8;
+    font-size:
+            12px;
+}
+/* ==========================================================
+   SAVED ADDRESS CONTENT
+========================================================== */
+.saved-address-content {
+    margin-top:
+            20px;
+    display:
+            flex;
+    align-items:
+            flex-start;
+    gap:
+            14px;
+    padding:
+            18px;
+    border-radius:
+            16px;
+    background:
+            #fff8f5;
+    border:
+            1px solid
+            rgba(255, 99, 71, .08);
+}
+.address-check-icon {
+    flex-shrink:
+            0;
+    width:
+            30px;
+    height:
+            30px;
+    display:
+            flex;
+    align-items:
+            center;
+    justify-content:
+            center;
+    border-radius:
+            50%;
+    background:
+            tomato;
+    color:
+            white;
+    font-weight:
+            800;
+}
+.saved-address-text {
+    color:
+            #334155;
+    font-size:
+            14px;
+    line-height:
+            1.7;
+    word-break:
+            break-word;
+}
+/* ==========================================================
+   SAVED ADDRESS ACTIONS
+========================================================== */
+.saved-address-actions {
+    display:
+            flex;
+    gap:
+            12px;
+    margin-top:
+            18px;
+}
+.saved-address-actions button {
+    flex:
+            1;
+    padding:
+            12px 15px;
+    border:
+            none;
+    border-radius:
+            12px;
+    font-size:
+            13px;
+    font-weight:
+            800;
+    cursor:
+            pointer;
+    transition:
+            .25s ease;
+}
+/* USE SAVED */
+.saved-use-btn {
+    background:
+            #f1f5f9;
+    color:
+            #475569;
+}
+.saved-use-btn:hover {
+    transform:
+            translateY(-2px);
+    background:
+            #e2e8f0;
+}
+.saved-use-btn.active {
+    background:
+            linear-gradient(
+                    135deg,
+                    #ff6347,
+                    #ff9f43
+            );
+    color:
+            white;
+    box-shadow:
+            0 8px 20px
+            rgba(255, 99, 71, .22);
+}
+/* EDIT */
+.edit-address-btn {
+    background:
+            #fff;
+    color:
+            tomato;
+    border:
+            1px solid
+            rgba(255, 99, 71, .25) !important;
+}
+.edit-address-btn:hover {
+    background:
+            #fff5f2;
+    transform:
+            translateY(-2px);
+}
+/* ==========================================================
+   PHONE CARD
+========================================================== */
+.phone-card {
+    margin-top:
+            18px;
+    padding:
+            22px;
+    background:
+            rgba(255, 255, 255, .9);
+    border:
+            1px solid #f1f5f9;
+    border-radius:
+            20px;
+    box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, .05);
+    animation:
+            formReveal .4s ease both;
+}
+.phone-card small {
+    display:
+            block;
+    margin-top:
+            7px;
+    color:
+            #94a3b8;
+    font-size:
+            11px;
+}
+/* ==========================================================
+   ADDRESS EDIT ACTIONS
+========================================================== */
+.address-edit-actions {
+    display:
+            flex;
+    gap:
+            12px;
+    margin-top:
+            24px;
+}
+.cancel-edit-btn {
+    flex:
+            0 0 120px;
+    border:
+            none;
+    border-radius:
+            50px;
+    padding:
+            15px;
+    background:
+            #f1f5f9;
+    color:
+            #475569;
+    font-weight:
+            700;
+    cursor:
+            pointer;
+    transition:
+            .3s ease;
+}
+.cancel-edit-btn:hover {
+    background:
+            #e2e8f0;
+    transform:
+            translateY(-2px);
+}
+/* ==========================================================
+   SAVED CHECKOUT BUTTON
+========================================================== */
+.saved-checkout-btn {
+    margin-top:
+            18px;
+}
 /* ==========================================================
    HEADINGS
 ========================================================== */
-
-
-.container h4{
-
-
-    font-weight:800;
-
-    letter-spacing:-.4px;
-
-
+.place-order-page h4 {
+    font-weight:
+            800;
+    letter-spacing:
+            -.4px;
 }
-
-
-
-
-
 /* ==========================================================
    CHECKOUT BUTTON
 ========================================================== */
-
-
-.container .btn-primary{
-
-
-    border:none;
-
-
-    border-radius:50px;
-
-
-    padding:15px;
-
-
-    font-weight:700;
-
-
-    font-size:1.05rem;
-
-
-
+.place-order-page .btn-primary {
+    border:
+            none;
+    border-radius:
+            50px;
+    padding:
+            15px;
+    font-weight:
+            700;
+    font-size:
+            1.05rem;
     background:
-
-
             linear-gradient(
-
                     135deg,
-
                     tomato,
-
                     #ff7043
-
             );
-
-
-    transition:.3s ease;
-
-
+    transition:
+            .3s ease;
 }
-
-
-
-
-
-.container .btn-primary:hover:not(:disabled){
-
-
+.place-order-page .btn-primary:hover:not(:disabled) {
     transform:
-
             translateY(-4px);
-
-
     box-shadow:
-
-
             0 15px 35px
-
-            rgba(255,99,71,.35);
-
-
+            rgba(255, 99, 71, .35);
 }
-
-
-
-.container .btn-primary:active{
-
-
+.place-order-page .btn-primary:active {
     transform:
-
             scale(.97);
-
-
 }
-
-
-
-
-
-.container .btn-primary:disabled{
-
-
-    opacity:.5;
-
-
+.place-order-page .btn-primary:disabled {
+    opacity:
+            .5;
+    cursor:
+            not-allowed;
 }
-
-
-
-
-
 /* ==========================================================
-   TOTAL SECTION
+   TOTAL
 ========================================================== */
-
-
-.container .list-group-item:last-child{
-
-
-    font-size:1.15rem;
-
-
+.place-order-page .list-group-item:last-child {
+    font-size:
+            1.15rem;
     background:
-
-
             linear-gradient(
-
                     135deg,
-
                     #fff5f2,
-
                     white
-
             );
-
-
 }
-
-
-
-
-
 /* ==========================================================
-   INPUT STAGGER
+   INPUT ANIMATION
 ========================================================== */
-
-
-.container form input{
-
-
+.place-order-page form input {
     animation:
-
             inputReveal .4s ease both;
-
-
 }
-
-
-
-@keyframes inputReveal{
-
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(10px);
-
+@keyframes inputReveal {
+    from {
+        opacity:
+                0;
+        transform:
+                translateY(10px);
     }
-
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
+    to {
+        opacity:
+                1;
+        transform:
+                translateY(0);
     }
-
-
 }
-
-
-
-
+/* ==========================================================
+   LOADING
+========================================================== */
+.checkout-loading {
+    min-height:
+            70vh;
+    display:
+            flex;
+    flex-direction:
+            column;
+    align-items:
+            center;
+    justify-content:
+            center;
+    gap:
+            12px;
+    color:
+            #64748b;
+}
+.checkout-loader {
+    font-size:
+            45px;
+    animation:
+            checkoutLoader 1.2s ease-in-out infinite;
+}
+@keyframes checkoutLoader {
+    0%,
+    100% {
+        transform:
+                translateY(0)
+                rotate(0deg);
+    }
+    50% {
+        transform:
+                translateY(-10px)
+                rotate(-5deg);
+    }
+}
+.checkout-loading p {
+    margin:
+            0;
+    font-weight:
+            600;
+}
 /* ==========================================================
    RESPONSIVE
 ========================================================== */
-
-
-@media(max-width:768px){
-
-
-    .container form{
-
-
-        padding:20px;
-
-        border-radius:18px;
-
-
+@media (max-width: 768px) {
+    .place-order-page form {
+        padding:
+                20px;
+        border-radius:
+                18px;
     }
-
-
-
-    .container h4{
-
-
-        font-size:1.3rem;
-
-
+    .place-order-page h4 {
+        font-size:
+                1.3rem;
     }
-
-
-
+    .saved-address-card {
+        padding:
+                18px;
+    }
+    .saved-address-actions {
+        flex-direction:
+                column;
+    }
+    .address-edit-actions {
+        flex-direction:
+                column;
+    }
+    .cancel-edit-btn {
+        flex:
+                1;
+        width:
+                100%;
+    }
 }
-
-
-
-
-
+@media (max-width: 480px) {
+    .saved-address-content {
+        padding:
+                14px;
+    }
+    .saved-address-text {
+        font-size:
+                13px;
+    }
+    .place-order-page .btn-primary {
+        font-size:
+                .95rem;
+    }
+}
 /* ==========================================================
    REDUCED MOTION
 ========================================================== */
-
-
-@media(prefers-reduced-motion:reduce){
-
-
-    *{
-
-        animation:none!important;
-
-        transition:none!important;
-
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation:
+                none !important;
+        transition:
+                none !important;
     }
-
-
 }

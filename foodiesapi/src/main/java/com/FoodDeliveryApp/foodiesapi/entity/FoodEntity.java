@@ -1,24 +1,29 @@
 package com.FoodDeliveryApp.foodiesapi.entity;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+@Document(collection = "foods")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection="foods")
 public class FoodEntity {
     @Id
     private String id;
     private String name;
     private String description;
-    private double price;
     private String category;
+    private String subCategory; // Added subCategory field
+    private double price;
     private String imageUrl;
-
+    // If NOT using Lombok, explicitly define getters and setters:
+    public String getSubCategory() {
+        return subCategory;
+    }
+    public void setSubCategory(String subCategory) {
+        this.subCategory = subCategory;
+    }
 }

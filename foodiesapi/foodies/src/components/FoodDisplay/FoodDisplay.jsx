@@ -1,8 +1,6 @@
 import { useContext } from "react";
-
 import { StoreContext } from "../../context/StoreContext";
 import FoodItem from "../FoodItem/FoodItem";
-
 import "./FoodDisplay.css";
 const FoodDisplay = ({ category, searchText }) => {
     const { foodList } = useContext(StoreContext);
@@ -26,12 +24,9 @@ const FoodDisplay = ({ category, searchText }) => {
                     <span className="section-tag">
                         Fresh & Delicious
                     </span>
-
                     <h2>
                         Popular Dishes 🍽️
                     </h2>
-
-
                     <p>
                         Explore amazing food prepared by our chefs
                     </p>
@@ -46,89 +41,36 @@ const FoodDisplay = ({ category, searchText }) => {
                                 <div
                                     key={food.id}
                                     className="food-card-wrapper"
-
                                     style={{
                                         animationDelay:
                                             `${index * 0.08}s`
                                     }}
-
                                 >
-
-
-
                                     <FoodItem
-
                                         id={food.id}
-
                                         name={food.name}
-
                                         description={food.description}
-
                                         imageUrl={food.imageUrl}
-
                                         price={food.price}
-
                                     />
-
-
                                 </div>
-
-
                             ))
-
-
                         }
-
-
                     </div>
-
-
-
                     :
-
-
-
                     <div className="empty-food">
-
-
                         <div className="empty-icon">
-
                             🍕
-
-
                         </div>
-
-
-
                         <h3>
-
                             No delicious food found
-
                         </h3>
-
-
-
                         <p>
-
                             Try searching another dish or category.
-
                         </p>
-
-
                     </div>
-
-
             }
-
-
-
         </section>
-
-
     );
-
-
 };
-
-
 export default FoodDisplay;
