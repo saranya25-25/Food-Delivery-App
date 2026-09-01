@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:8080/api/orders";
+const API_URL = " https://food-delivery-project-2y1g.onrender.com/api/orders";
 // =========================================================
 // FETCH USER ORDERS
 // =========================================================

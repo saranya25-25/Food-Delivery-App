@@ -3,7 +3,7 @@ import axios from "axios";
 // =========================================================
 // LOCAL SPRING BOOT BACKEND
 // =========================================================
-const API_URL = "http://localhost:8080/api/orders";
+const API_URL = " https://food-delivery-project-2y1g.onrender.com/api/orders";
 // =========================================================
 // FETCH ALL ORDERS
 // =========================================================
