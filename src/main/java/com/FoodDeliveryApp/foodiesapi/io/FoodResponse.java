@@ -1,10 +1,8 @@
 package com.FoodDeliveryApp.foodiesapi.io;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,6 +14,4 @@ public class FoodResponse {
     private String description;
     private double price;
     private String category;
-
-
 }

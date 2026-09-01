@@ -4,22 +4,17 @@ import {
     Routes,
     useLocation
 } from "react-router-dom";
-
 import {
     AnimatePresence,
     motion
 } from "framer-motion";
-
 import {
     ToastContainer
 } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
-
 import Menubar from "./components/Menubar/Menubar";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
 import ExploreFood from "./pages/ExploreFood/ExploreFood";
@@ -29,14 +24,12 @@ import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import Profile from "./pages/Profile/Profile";
 import Favorites from "./components/Favorites/Favorites";
-
+import FoodieBotDrawer from "./components/FoodieBotDrawer/FoodieBotDrawer";
 import { StoreContext } from "./context/StoreContext";
-
-
+import TrackOrder from "./pages/TrackOrder/TrackOrder";
 // =========================================================
 // ANIMATED PAGE
 // =========================================================
-
 const AnimatedPage = ({ children }) => {
     return (
         <motion.div
@@ -64,40 +57,26 @@ const AnimatedPage = ({ children }) => {
         </motion.div>
     );
 };
-
-
 // =========================================================
 // APP
 // =========================================================
-
 const App = () => {
-
     const { token } =
         useContext(StoreContext);
-
     const location =
         useLocation();
-
-
     const isAuthPage =
         ["/login", "/register"]
             .includes(location.pathname);
-
-
     return (
         <div className="app-container">
-
             {/* =================================================
                 MENUBAR
             ================================================= */}
-
             {!isAuthPage && <Menubar />}
-
-
             {/* =================================================
                 TOAST
             ================================================= */}
-
             <ToastContainer
                 position="top-right"
                 autoClose={2500}
@@ -107,23 +86,17 @@ const App = () => {
                 pauseOnHover
                 theme="colored"
             />
-
-
             {/* =================================================
                 ROUTES
             ================================================= */}
-
             <AnimatePresence mode="wait">
-
                 <Routes
                     location={location}
                     key={location.pathname}
                 >
-
                     {/* =================================================
                         HOME
                     ================================================= */}
-
                     <Route
                         path="/"
                         element={
@@ -132,12 +105,9 @@ const App = () => {
                             </AnimatedPage>
                         }
                     />
-
-
                     {/* =================================================
                         CONTACT
                     ================================================= */}
-
                     <Route
                         path="/contact"
                         element={
@@ -152,12 +122,9 @@ const App = () => {
                             )
                         }
                     />
-
-
                     {/* =================================================
                         EXPLORE
                     ================================================= */}
-
                     <Route
                         path="/explore"
                         element={
@@ -166,12 +133,9 @@ const App = () => {
                             </AnimatedPage>
                         }
                     />
-
-
                     {/* =================================================
                         FOOD DETAILS
                     ================================================= */}
-
                     <Route
                         path="/food/:id"
                         element={
@@ -180,12 +144,9 @@ const App = () => {
                             </AnimatedPage>
                         }
                     />
-
-
                     {/* =================================================
                         CART
                     ================================================= */}
-
                     <Route
                         path="/cart"
                         element={
@@ -200,12 +161,9 @@ const App = () => {
                             )
                         }
                     />
-
-
                     {/* =================================================
                         PLACE ORDER
                     ================================================= */}
-
                     <Route
                         path="/order"
                         element={
@@ -220,12 +178,9 @@ const App = () => {
                             )
                         }
                     />
-
-
                     {/* =================================================
                         MY ORDERS
                     ================================================= */}
-
                     <Route
                         path="/myorders"
                         element={
@@ -240,12 +195,9 @@ const App = () => {
                             )
                         }
                     />
-
-
                     {/* =================================================
                         PROFILE
                     ================================================= */}
-
                     <Route
                         path="/profile"
                         element={
@@ -260,12 +212,9 @@ const App = () => {
                             )
                         }
                     />
-
-
                     {/* =================================================
                         FAVORITES
                     ================================================= */}
-
                     <Route
                         path="/favorites"
                         element={
@@ -280,12 +229,9 @@ const App = () => {
                             )
                         }
                     />
-
-
                     {/* =================================================
                         LOGIN
                     ================================================= */}
-
                     <Route
                         path="/login"
                         element={
@@ -300,12 +246,9 @@ const App = () => {
                             )
                         }
                     />
-
-
                     {/* =================================================
                         REGISTER
                     ================================================= */}
-
                     <Route
                         path="/register"
                         element={
@@ -320,14 +263,17 @@ const App = () => {
                             )
                         }
                     />
-
+                    <Route
+                        path="/track-order/:id"
+                        element={<TrackOrder />}
+                    />
                 </Routes>
-
             </AnimatePresence>
-
+            {/* =================================================
+                FLOATING AI VOICE ASSISTANT DRAWER
+            ================================================= */}
+            <FoodieBotDrawer />
         </div>
     );
 };
-
-
 export default App;

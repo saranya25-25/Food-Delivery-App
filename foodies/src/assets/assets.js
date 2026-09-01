@@ -1,6 +1,5 @@
 import logo from './logo.png';
 import cart from './cart.png';
-
 import biryani from './biryani.png';
 import pizza from './pizza.png';
 import burger from './burger.png';
@@ -16,18 +15,14 @@ import fries from './fries.jpg';
 import salad from './salad.png';
 import cakes from './cakes.png';
 import icecream from './icecream.png';
-
-
 import profile from './profile.png';
 import delivery from './delivery.png';
-
 export const assets = {
     logo,
     cart,
     profile,
     delivery
 }
-
 export const categories = [
     {
         category: 'Biryani',
@@ -65,7 +60,6 @@ export const categories = [
         category:'Momos',
         icon:momos
     },
-
     {
         category: 'Rolls',
         icon: rolls
@@ -78,7 +72,6 @@ export const categories = [
       category: 'Fries',
       icon:fries
     },
-
     {
         category: 'Salad',
         icon: salad
@@ -91,5 +84,4 @@ export const categories = [
         category: 'Ice cream',
         icon: icecream
     }
-
 ];

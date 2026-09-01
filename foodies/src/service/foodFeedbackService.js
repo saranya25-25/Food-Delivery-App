@@ -1,7 +1,5 @@
 import axios from "axios";
-
-const API_URL = "https://foodies-backend-z67f.onrender.com/api/food-feedback";
-
+const API_URL = "https://food-delivery-project-2y1g.onrender.com/api/food-feedback";
 // SAVE / UPDATE FEEDBACK
 export const saveFoodFeedback = async (feedback, token) => {
     const response = await axios.post(
@@ -14,10 +12,8 @@ export const saveFoodFeedback = async (feedback, token) => {
             }
         }
     );
-
     return response.data;
 };
-
 // GET FEEDBACK
 export const fetchFoodFeedback = async (foodId, token) => {
     const response = await axios.get(
@@ -28,10 +24,8 @@ export const fetchFoodFeedback = async (foodId, token) => {
             }
         }
     );
-
     return response.data;
 };
-
 // DELETE FEEDBACK
 export const deleteFoodFeedback = async (foodId, token) => {
     await axios.delete(

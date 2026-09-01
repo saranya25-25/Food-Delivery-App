@@ -1,13 +1,11 @@
 package com.FoodDeliveryApp.foodiesapi.entity;
-
 import com.FoodDeliveryApp.foodiesapi.io.OrderItem;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import java.time.LocalDateTime;
 import java.util.List;
-
 @Document(collection = "orders")
 @Data
 @Builder
@@ -25,4 +23,31 @@ public class OrderEntity {
     private String razorpaySignature;
     private String razorpayPaymentId;
     private String orderStatus;
+    // =========================================================
+    // ORDER TRACKING
+    // =========================================================
+    /**
+     * Time when the order was placed.
+     */
+    private LocalDateTime orderPlacedAt;
+    /**
+     * Expected delivery time.
+     */
+    private LocalDateTime estimatedDeliveryTime;
+    /**
+     * Time when order was confirmed.
+     */
+    private LocalDateTime confirmedAt;
+    /**
+     * Time when restaurant started preparing order.
+     */
+    private LocalDateTime preparingAt;
+    /**
+     * Time when delivery partner picked up order.
+     */
+    private LocalDateTime outForDeliveryAt;
+    /**
+     * Time when order was delivered.
+     */
+    private LocalDateTime deliveredAt;
 }

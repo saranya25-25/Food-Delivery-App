@@ -2,13 +2,10 @@
    FOOD LIST PAGE
    Theme : Dark Slate + Emerald
 ====================================================== */
-
 body{
     background:#f4f7fb;
 }
-
 /* ================= Card ================= */
-
 .food-card{
     border-radius:18px;
     overflow:hidden;
@@ -16,14 +13,11 @@ body{
     background:#ffffff;
     transition:0.35s ease;
 }
-
 .food-card:hover{
     transform:translateY(-3px);
     box-shadow:0 18px 45px rgba(15,23,42,.08);
 }
-
 /* ================= Header ================= */
-
 .food-header{
     background:#1e293b;
     color:#fff;
@@ -33,18 +27,15 @@ body{
     align-items:center;
     flex-wrap:wrap;
 }
-
 .food-header h3{
     margin:0;
     font-weight:700;
 }
-
 .food-header p{
     margin-top:6px;
     color:#cbd5e1;
     font-size:14px;
 }
-
 .food-count{
     background:#10b981;
     color:white;
@@ -53,40 +44,31 @@ body{
     font-weight:600;
     font-size:14px;
 }
-
 /* ================= Table ================= */
-
 .food-table{
     margin:0;
 }
-
 .food-table thead{
     background:#f8fafc;
 }
-
 .food-table th{
     color:#334155;
     font-weight:600;
     padding:18px;
     border:none;
 }
-
 .food-table td{
     padding:18px;
     vertical-align:middle;
     border-top:1px solid #eef2f7;
 }
-
 .food-table tbody tr{
     transition:.30s ease;
 }
-
 .food-table tbody tr:hover{
     background:#f8fffc;
 }
-
 /* ================= Image ================= */
-
 .food-image{
     width:65px;
     height:65px;
@@ -95,13 +77,10 @@ body{
     transition:.35s;
     box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
-
 .food-image:hover{
     transform:scale(1.08);
 }
-
 /* ================= Badge ================= */
-
 .category-badge{
     display:inline-block;
     background:#ecfdf5;
@@ -111,17 +90,13 @@ body{
     font-size:13px;
     font-weight:600;
 }
-
 /* ================= Price ================= */
-
 .price{
     color:#10b981;
     font-size:17px;
     font-weight:700;
 }
-
 /* ================= Delete Button ================= */
-
 .delete-btn{
     width:42px;
     height:42px;
@@ -131,53 +106,41 @@ body{
     color:#dc2626;
     transition:.30s;
 }
-
 .delete-btn:hover{
     background:#dc2626;
     color:#fff;
     transform:rotate(10deg) scale(1.08);
 }
-
 /* ================= Empty State ================= */
-
 .empty-state{
     padding:70px 20px !important;
     color:#64748b;
 }
-
 .empty-state i{
     color:#10b981;
 }
-
 .empty-state h5{
     margin-top:15px;
     font-weight:700;
 }
-
 /* ================= Responsive ================= */
-
 @media(max-width:768px){
-
     .food-header{
         padding:18px;
         text-align:center;
         justify-content:center;
         gap:15px;
     }
-
     .food-table th,
     .food-table td{
         padding:12px;
         font-size:14px;
     }
-
     .food-image{
         width:55px;
         height:55px;
     }
-
     .food-count{
         font-size:13px;
     }
-
 }

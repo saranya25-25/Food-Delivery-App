@@ -1,36 +1,83 @@
-HELP.md
+
+# ==========================================
+# Maven
+# ==========================================
 target/
-.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+# ==========================================
+# Spring / STS
+# ==========================================
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
+# ==========================================
+# IntelliJ IDEA
+# ==========================================
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# ==========================================
+# NetBeans
+# ==========================================
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
+
+# ==========================================
+# Gradle
+# ==========================================
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
+# ==========================================
+# VS Code
+# ==========================================
 .vscode/
+
+# ==========================================
+# Environment / Secrets
+# ==========================================
 .env
+.env.*
+!.env.example
+
+# Local Spring configuration
+application-local.properties
+application-local.yml
+application-dev.properties
+application-dev.yml
+
+# Secret/config files
+credentials.json
 credentials.csv
-*.csv
+secrets.json
+secrets.properties
+*.pem
+*.key
+
+# ==========================================
+# Logs
+# ==========================================
+*.log
+
+# ==========================================
+# OS files
+# ==========================================
+.DS_Store
+Thumbs.db
+

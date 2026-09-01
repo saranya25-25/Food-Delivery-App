@@ -1,14 +1,9 @@
 import axios from "axios";
-
-const API_URL = "https://foodies-backend-z67f.onrender.com/api";
-
-
+const API_URL = "https://food-delivery-project-2y1g.onrender.com/api";
 // =========================================================
 // GET PROFILE
 // =========================================================
-
 export const fetchProfile = async (token) => {
-
     const response = await axios.get(
         `${API_URL}/profile`,
         {
@@ -17,20 +12,15 @@ export const fetchProfile = async (token) => {
             },
         }
     );
-
     return response.data;
 };
-
-
 // =========================================================
 // UPDATE PROFILE
 // =========================================================
-
 export const updateProfile = async (
     profileData,
     token
 ) => {
-
     const response = await axios.put(
         `${API_URL}/profile`,
         profileData,
@@ -41,24 +31,17 @@ export const updateProfile = async (
             },
         }
     );
-
     return response.data;
 };
-
-
 // =========================================================
 // UPLOAD / REPLACE PROFILE IMAGE
 // =========================================================
-
 export const uploadProfileImage = async (
     file,
     token
 ) => {
-
     const formData = new FormData();
-
     formData.append("file", file);
-
     const response = await axios.post(
         `${API_URL}/profile/image`,
         formData,
@@ -68,19 +51,14 @@ export const uploadProfileImage = async (
             },
         }
     );
-
     return response.data;
 };
-
-
 // =========================================================
 // DELETE PROFILE IMAGE
 // =========================================================
-
 export const deleteProfileImage = async (
     token
 ) => {
-
     const response = await axios.delete(
         `${API_URL}/profile/image`,
         {
@@ -89,6 +67,5 @@ export const deleteProfileImage = async (
             },
         }
     );
-
     return response.data;
 };
